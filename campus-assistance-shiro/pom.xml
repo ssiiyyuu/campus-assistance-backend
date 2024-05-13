@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.siyu</groupId>
+        <artifactId>campus-assistance-backend</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>campus-assistance-shiro</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>campus-assistance-shiro</name>
+    <description>campus-assistance-shiro</description>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.siyu</groupId>
+            <artifactId>campus-assistance-common</artifactId>
+        </dependency>
+    </dependencies>
+
+
+</project>

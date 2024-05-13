@@ -1,0 +1,7 @@
+cab:
+  db:
+    host: localhost
+    port: 3306
+    database: campus
+    username: siyu
+    password: 123456

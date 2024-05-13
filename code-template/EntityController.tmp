@@ -1,0 +1,70 @@
+package ${basePackage}.controller;
+
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.siyu.common.domain.PaginationQuery;
+import com.siyu.common.domain.PaginationResult;
+import com.siyu.common.domain.R;
+import com.siyu.common.utils.BeanUtils;
+import ${basePackage}.entity.${EntityName};
+import ${basePackage}.entity.vo.${EntityName}VO;
+import ${basePackage}.service.${EntityName}Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/${entityName}")
+public class ${EntityName}Controller {
+
+    @Autowired
+    private ${EntityName}Service ${entityName}Service;
+
+    @ApiOperation("分页查询")
+    @PostMapping("/page")
+    public R<PaginationResult<${EntityName}VO.Table>> page(@RequestBody PaginationQuery<${EntityName}VO.Condition> query) {
+        ${EntityName}VO.Condition condition = query.getCondition();
+        Page<${EntityName}> page = new Page<>(query.getPageNum(), query.getPageSize());
+        LambdaQueryWrapper<${EntityName}> wrapper = new LambdaQueryWrapper<${EntityName}>()${EntityCondition}
+        page = ${entityName}Service.page(page, wrapper);
+        List<${EntityName}VO.Table> list = page.getRecords().stream()
+                .map(item -> BeanUtils.copyProperties(item, new ${EntityName}VO.Table()))
+                .collect(Collectors.toList());
+        return R.ok(PaginationResult.of(page, list));
+    }
+
+    @ApiOperation("查")
+    @GetMapping("/{id}")
+    public R<${EntityName}VO.Out> load(@PathVariable String id) {
+        ${EntityName}VO.Out out = BeanUtils.copyProperties(${entityName}Service.getById(id), new ${EntityName}VO.Out());
+        return R.ok(out);
+    }
+
+    @ApiOperation("增")
+    @PostMapping
+    public R<?> create(@RequestBody @Valid ${EntityName}VO.In in) {
+        ${EntityName} ${entityName} = BeanUtils.copyProperties(in, new ${EntityName}());
+        ${entityName}Service.save(${entityName});
+        return R.noContent();
+    }
+
+    @ApiOperation("改")
+    @PutMapping("/{id}")
+    public R<?> update(@PathVariable String id, @RequestBody @Valid ${EntityName}VO.In in) {
+        ${entityName}Service.updateById(BeanUtils.copyProperties(in, ${entityName}Service.getById(id)));
+        return R.noContent();
+    }
+
+    @ApiOperation("删")
+    @DeleteMapping("/{ids}")
+    public R<?> deleteByIds(@PathVariable String ids) {
+        ${entityName}Service.removeByIds(Arrays.stream(ids.split(",")).toList());
+        return R.noContent();
+    }
+}

@@ -1,0 +1,27 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: campus-assistance-backend
+  profiles:
+    active: dev
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${cab.db.username}
+    password: ${cab.db.password}
+    url: jdbc:mysql://${cab.db.host}:${cab.db.port}/${cab.db.database}?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+
+  #swagger3.0
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
+jwt:
+  refresh: 24
+  expire: 48
+  secret: 8a36b06d-2d0f-4642-b96c-c99c735a02bb
+
+user:
+  salt: 8a36b06d-2d0f-4642-b96c-c99c735a02bb

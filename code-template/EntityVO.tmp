@@ -1,0 +1,37 @@
+package ${basePackage}.entity.vo;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+public interface ${EntityName}VO {
+    @Data
+    @ApiModel("${EntityName}VO in")
+    class In {
+        @ApiModelProperty(value = "id", hidden = true)
+        private String id;
+        ${VOFields}
+    }
+
+    @Data
+    @ApiModel("${EntityName}VO out")
+    class Out {
+        @ApiModelProperty("id")
+        private String id;
+        ${VOFields}
+    }
+
+    @Data
+    @ApiModel("${EntityName}VO condition")
+    class Condition {
+        ${VOFields}
+    }
+
+    @Data
+    @ApiModel("${EntityName}VO table")
+    class Table {
+        @ApiModelProperty("id")
+        private String id;
+        ${VOFields}
+    }
+}

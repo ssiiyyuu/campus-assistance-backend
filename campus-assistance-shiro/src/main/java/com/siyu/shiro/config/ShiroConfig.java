@@ -81,7 +81,7 @@ public class ShiroConfig {
         chainDefinition.addPathDefinition("/favicon.ico","anon");
         //开放login接口
         chainDefinition.addPathDefinition("/login","noSessionCreation, anon");
-//        chainDefinition.addPathDefinition("/admin/**", "noSessionCreation, authcToken, anyRole[admin]");
+        chainDefinition.addPathDefinition("/admin/**", "noSessionCreation, authcToken, anyRole[admin]");
         chainDefinition.addPathDefinition("/**", "noSessionCreation, authcToken");
         return chainDefinition;
     }

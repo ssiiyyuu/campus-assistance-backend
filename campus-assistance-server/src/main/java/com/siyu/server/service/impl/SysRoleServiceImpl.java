@@ -63,4 +63,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             sysUserRoleMapper.insert(sysUserRole);
         });
     }
+
+    @Override
+    public SysRole getByName(String name) {
+        return sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>()
+                .eq(SysRole::getRoleName, name));
+    }
 }

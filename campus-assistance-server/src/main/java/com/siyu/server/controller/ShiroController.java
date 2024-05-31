@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api("用户基础服务")
+@Api(tags = "用户基础服务")
 @RestController
 public class ShiroController {
 

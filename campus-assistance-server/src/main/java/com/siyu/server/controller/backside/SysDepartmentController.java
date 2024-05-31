@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api("后台——部门")
+@Api(tags = "后台——部门")
 @RestController
 @RequestMapping("/admin/sysDepartment")
 public class SysDepartmentController {
@@ -81,7 +81,9 @@ public class SysDepartmentController {
     @ApiOperation("改")
     @PutMapping("/{id}")
     public R<?> update(@PathVariable String id, @RequestBody @Valid SysDepartmentVO.In in) {
-        sysDepartmentService.updateById(BeanUtils.copyProperties(in, sysDepartmentService.getById(id)));
+        SysDepartment department = BeanUtils.copyProperties(in, sysDepartmentService.getById(id));
+        department.setUpdateTime(null);
+        sysDepartmentService.updateById(department);
         return R.noContent();
     }
 

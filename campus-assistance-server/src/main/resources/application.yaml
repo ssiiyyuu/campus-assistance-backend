@@ -11,16 +11,24 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${cab.db.username}
     password: ${cab.db.password}
-    url: jdbc:mysql://${cab.db.host}:${cab.db.port}/${cab.db.database}?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://${cab.db.host}:${cab.db.port}/${cab.db.database}?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&nullCatalogMeansCurrent=true
 
   #swagger3.0
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
 
+flowable:
+  #自动更新表结构
+  database-schema-update: false
+  #定时任务
+  async-executor-activate: false
+  #自动部署
+  check-process-definitions: false
+
 jwt:
   refresh: 24
-  expire: 48
+  expire: 256
   secret: 8a36b06d-2d0f-4642-b96c-c99c735a02bb
 
 user:

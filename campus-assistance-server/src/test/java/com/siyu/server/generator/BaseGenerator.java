@@ -75,7 +75,6 @@ public abstract class BaseGenerator {
     }
 
     protected boolean check(String line) {
-        line = line.trim();
         if(line.isEmpty()) {
             return false;
         }

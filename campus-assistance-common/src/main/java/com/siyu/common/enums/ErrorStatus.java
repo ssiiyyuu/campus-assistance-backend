@@ -7,11 +7,13 @@ public enum ErrorStatus {
 
     SYS_ERROR("A0000", "系统异常"),
 
+    PARAM_ERROR("A0100", "参数校验失败"),
+
     AUTHOR_ERROR("A0200", "权限异常"),
 
-    AUTHEN_ERROR("A0201", "认证异常"),
+    AUTHEN_ERROR("A0201", "认证失败"),
 
-    TOKEN_ERROR("A0300", "TOKEN认证异常"),
+    TOKEN_ERROR("A0300", "TOKEN认证失败"),
 
     LOGIN_ERROR("A0400", "登录失败"),
 
@@ -19,8 +21,15 @@ public enum ErrorStatus {
 
     INSERT_ERROR("S0100", "插入异常"),
 
-    UNKNOWN("UNKNOWN", "UNKNOWN")
-    ;
+    UPDATE_ERROR("S0200", "更新异常"),
+
+    DELETE_ERROR("S0300", "删除异常"),
+
+    QUERY_ERROR("S0400", "查询异常"),
+
+    IO_ERROR("S0500", "IO异常"),
+
+    UNKNOWN("UNKNOWN", "UNKNOWN");
 
 
 

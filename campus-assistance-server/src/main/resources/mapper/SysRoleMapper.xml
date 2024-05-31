@@ -15,8 +15,13 @@
     <select id="selectRolesByUserId" resultType="com.siyu.common.domain.entity.SysRole">
         SELECT * FROM sys_role
             LEFT OUTER JOIN sys_user_role ON sys_role.id = sys_user_role.role_id
-            WHERE sys_user_role.user_id = #{userId}
-            AND sys_role.deleted = false;
+            WHERE sys_user_role.user_id = #{id}
+    </select>
+    <select id="selectBaseRolesByUserId" resultType="com.siyu.server.entity.dto.SysRoleBaseDTO">
+        SELECT sys_role.role_code, sys_role.role_name
+        FROM sys_role
+        LEFT OUTER JOIN sys_user_role ON sys_role.id = sys_user_role.role_id
+        WHERE sys_user_role.user_id = #{id}
     </select>
 
 </mapper>

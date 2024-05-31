@@ -8,13 +8,27 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
+import java.io.*;
 
 public class WebUtils {
 
     public static final String AUTHENTICATION_HEADER = "Authorization";
 
-    public static void writeInResponse(Object object, HttpServletResponse response) throws Exception {
+    public static void writePNG2Response(InputStream inputStream, HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("image/png;charset=UTF-8");
+        response.setStatus(HttpStatus.OK.value());
+
+        byte[] buf = new byte[1024];
+        int length;
+        OutputStream out = response.getOutputStream();
+        while ((length = inputStream.read(buf)) != -1) {
+            out.write(buf, 0, length);
+        }
+        out.close();
+    }
+
+    public static void write2Response(Object object, HttpServletResponse response) throws Exception {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpStatus.OK.value());
@@ -23,6 +37,7 @@ public class WebUtils {
 
         String json = JSONObject.toJSONString(object, JSONWriter.Feature.WriteMapNullValue);
         writer.write(json);
+        writer.close();
     }
 
     public static HttpServletResponse getHttpServletResponse() {

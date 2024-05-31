@@ -21,9 +21,11 @@ public class EntityVOGenerator extends BaseGenerator{
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(entityPath), StandardCharsets.UTF_8));
         StringBuilder filedBuilder = new StringBuilder();
+        StringBuilder filedValidateBuilder = new StringBuilder();
         boolean start = false;
         String line;
         while ((line = reader.readLine()) != null) {
+            line = line.trim();
             //不要更改顺序
             //class ClassName: start
             if (line.contains("class") && line.contains(entityName)) {
@@ -32,24 +34,31 @@ public class EntityVOGenerator extends BaseGenerator{
             }
             //@Swagger注解
             if (start && line.contains("@Api")) {
-                filedBuilder.append("\n\t").append(line).append("\n");
+                filedBuilder.append("\t\t").append(line).append("\n");
+                filedValidateBuilder.append("\t\t").append(line).append("\n");
                 continue;
             }
             //类结束或遇到方法: end
             if (start && (line.startsWith("}") || (line.contains("(") && line.contains(")")))) {
                 break;
             }
-            //.eq(StringUtils.hasText(condition.getUsername()), SysUser::getUsername, condition.getUsername())
             //非static与final的字段
             if (start && check(line)) {
-                filedBuilder.append("\t").append(line).append("\n");
+                filedBuilder.append("\t\t").append(line).append("\n\n");
+                filedValidateBuilder.append("\t\t@NotBlank\n");
+                filedValidateBuilder.append("\t\t").append(line).append("\n\n");
                 continue;
             }
         }
+        System.out.println("content = " + content);
+        System.out.println("filedValidateBuilder.toString() = \n" + filedValidateBuilder.toString());
         reader.close();
         content = content.replaceAll("\\$\\{EntityName}", entityName);
         content = content.replaceAll("\\$\\{basePackage}", basePackage);
-        content = content.replaceAll("\\$\\{VOFields}", filedBuilder.toString());
+        content = content.replaceAll("\\t*\\$\\{VOFields}", filedBuilder.toString());
+        content = content.replaceAll("\\t*\\$\\{VOValidateFields}", filedValidateBuilder.toString());
+
+        System.out.println("content = " + content);
 
         FileOutputStream out = new FileOutputStream(file);
         out.write(content.getBytes(StandardCharsets.UTF_8));

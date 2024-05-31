@@ -5,17 +5,18 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 public interface SysDepartmentVO {
     @Data
     @ApiModel("SysDepartmentVO in")
     class In {
-        @ApiModelProperty(value = "id", hidden = true)
-        private String id;
+        @NotBlank
         private String parentId;
-	    private String name;
-	    private String remark;
+
+        @NotBlank
+        private String name;
 
     }
 
@@ -24,11 +25,17 @@ public interface SysDepartmentVO {
     class Out {
         @ApiModelProperty("id")
         private String id;
+
         private String parentId;
+
         private String parent;
+
 	    private String name;
+
 	    private String remark;
+
 	    private Integer level;
+
 	    private String code;
 
     }
@@ -37,6 +44,7 @@ public interface SysDepartmentVO {
     @ApiModel("SysDepartmentVO condition")
     class Condition {
 	    private String name;
+
 	    private Integer level;
     }
 
@@ -45,24 +53,37 @@ public interface SysDepartmentVO {
     class Table {
         @ApiModelProperty("id")
         private String id;
+
         private String parentId;
+
         private String parent;
+
 	    private String name;
+
 	    private String remark;
+
 	    private Integer level;
+
 	    private String code;
 
     }
 
     @Data
+    @ApiModel("SysDepartmentVO tree")
     class Tree implements TreeNode<Tree, String> {
         @ApiModelProperty("id")
         private String id;
+
         private String parentId;
+
         private String name;
+
         private String remark;
+
         private Integer level;
+
         private String code;
+
         private List<Tree> childList;
     }
 }

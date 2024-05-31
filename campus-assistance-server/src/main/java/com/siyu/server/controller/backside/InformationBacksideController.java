@@ -6,32 +6,25 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.siyu.common.domain.PaginationQuery;
 import com.siyu.common.domain.PaginationResult;
 import com.siyu.common.domain.R;
-import com.siyu.common.enums.ErrorStatus;
-import com.siyu.common.enums.InformationStatus;
-import com.siyu.common.exception.BusinessException;
 import com.siyu.common.utils.BeanUtils;
 import com.siyu.server.entity.Information;
 import com.siyu.server.entity.vo.InformationVO;
 import com.siyu.server.service.InformationService;
-import com.siyu.shiro.entity.ShiroUser;
-import com.siyu.shiro.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api("后台——信息发布")
+@Api(tags = "后台——信息发布")
 @RestController
 @RequestMapping("/admin/information")
-public class InformationController {
+public class InformationBacksideController {
 
     @Autowired
     private InformationService informationService;
@@ -42,11 +35,15 @@ public class InformationController {
         InformationVO.Condition condition = query.getCondition();
         Page<Information> page = new Page<>(query.getPageNum(), query.getPageSize());
         LambdaQueryWrapper<Information> wrapper = new LambdaQueryWrapper<Information>()
+            .select(Information::getId , Information::getAuthorId, Information::getCover, Information::getTitle, Information::getDepartmentCode, Information::getStatus, Information::getVisits, Information::getCategoryId, Information::getPublishTime)
 			.eq(StringUtils.hasText(condition.getCategoryId()), Information::getCategoryId, condition.getCategoryId())
 			.like(StringUtils.hasText(condition.getTitle()), Information::getTitle, "%" + condition.getTitle() + "%")
 			.eq(StringUtils.hasText(condition.getStatus()), Information::getStatus, condition.getStatus())
-			.eq(StringUtils.hasText(condition.getDepartmentCode()), Information::getDepartmentCode, condition.getDepartmentCode())
-            .between(null != condition.getPublishTime() && condition.getPublishTime().size() == 2, Information::getPublishTime, condition.getPublishTime().get(0), condition.getPublishTime().get(1));
+			.eq(StringUtils.hasText(condition.getDepartmentCode()), Information::getDepartmentCode, condition.getDepartmentCode());
+            //使用lambda有空指针异常
+            if(null != condition.getPublishTime() && condition.getPublishTime().size() == 2) {
+                wrapper.between(Information::getPublishTime, condition.getPublishTime().get(0), condition.getPublishTime().get(1));
+            }
         page = informationService.page(page, wrapper);
         List<InformationVO.Table> list = page.getRecords().stream()
                 .map(item -> informationService.setTableBaseInfo(item))
@@ -93,7 +90,9 @@ public class InformationController {
     @ApiOperation("改")
     @PutMapping("/{id}")
     public R<?> update(@PathVariable String id, @RequestBody @Valid InformationVO.In in) {
-        informationService.updateById(BeanUtils.copyProperties(in, informationService.getById(id)));
+        Information information = BeanUtils.copyProperties(in, informationService.getById(id));
+        information.setUpdateTime(null);
+        informationService.updateById(information);
         return R.noContent();
     }
 

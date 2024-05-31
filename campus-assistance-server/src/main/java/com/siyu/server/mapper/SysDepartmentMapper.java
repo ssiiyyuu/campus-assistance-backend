@@ -2,6 +2,7 @@ package com.siyu.server.mapper;
 
 import com.siyu.common.domain.entity.SysDepartment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.siyu.server.entity.dto.SysDepartmentBaseDTO;
 
 /**
  * <p>
@@ -23,4 +24,6 @@ public interface SysDepartmentMapper extends BaseMapper<SysDepartment> {
     String getMaxCodeByLevel(int level);
 
     String getMaxCodeByParentId(String parentId);
+
+    SysDepartmentBaseDTO selectBaseDepartmentByCode(String departmentCode);
 }

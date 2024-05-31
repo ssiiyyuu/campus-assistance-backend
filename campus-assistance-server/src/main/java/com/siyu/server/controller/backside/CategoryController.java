@@ -23,14 +23,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Api("后台——信息分类")
+@Api(tags = "后台——信息分类")
 @RestController
 @RequestMapping("/admin/category")
 public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
-
 
     @ApiOperation("树形数据")
     @GetMapping("/tree")
@@ -74,7 +73,9 @@ public class CategoryController {
     @ApiOperation("改")
     @PutMapping("/{id}")
     public R<?> update(@PathVariable String id, @RequestBody @Valid CategoryVO.In in) {
-        categoryService.updateById(BeanUtils.copyProperties(in, categoryService.getById(id)));
+        Category category = BeanUtils.copyProperties(in, categoryService.getById(id));
+        category.setUpdateTime(null);
+        categoryService.updateById(category);
         return R.noContent();
     }
 

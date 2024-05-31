@@ -95,7 +95,7 @@ public class JwtAuthFilter extends AuthenticatingFilter {
      */
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
-        WebUtils.writeInResponse(R.fail(ErrorStatus.TOKEN_ERROR), (HttpServletResponse) servletResponse);
+        WebUtils.write2Response(R.fail(ErrorStatus.TOKEN_ERROR), (HttpServletResponse) servletResponse);
         return false;
     }
 }

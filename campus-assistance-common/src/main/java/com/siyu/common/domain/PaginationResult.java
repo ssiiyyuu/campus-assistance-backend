@@ -1,19 +1,12 @@
 package com.siyu.common.domain;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.siyu.common.enums.ErrorStatus;
-import com.siyu.common.exception.BusinessException;
-import com.siyu.common.utils.BeanUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor

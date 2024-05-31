@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class GeneratorHandler {
 
-    private final static String entity = "D:\\Code\\Project\\campus-assistance-bakcend\\campus-assistance-server\\src\\main\\java\\com\\siyu\\server\\entity\\Category.java";
+    private final static String entity = "D:\\Code\\Project\\campus-assistance-bakcend\\campus-assistance-server\\src\\main\\java\\com\\siyu\\server\\entity\\CampusReportEvent.java";
 
     public static void main(String[] args) {
         try {

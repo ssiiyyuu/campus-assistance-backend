@@ -4,6 +4,9 @@ import com.siyu.server.entity.Information;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.siyu.server.entity.vo.InformationVO;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 /**
  * <p>
  *  服务类
@@ -23,4 +26,20 @@ public interface InformationService extends IService<Information> {
     InformationVO.Table setTableBaseInfo(Information information);
 
     InformationVO.Out setOutBaseInfo(Information information);
+
+    Information loadSystem(String id);
+
+    Information loadCampus(String id);
+
+    void createCampusDynamics(InformationVO.In in);
+
+    void createCampusAnnouncement(InformationVO.In in);
+
+    void checkAuthorPublish(String id);
+
+    void checkAuthorOffline(String id);
+
+    void checkAuthorRemove(List<String> ids);
+
+    void checkAuthorUpdate(String id, InformationVO.In in);
 }

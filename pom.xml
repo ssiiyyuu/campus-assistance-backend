@@ -40,6 +40,7 @@
 		<shiro-spring-boot-web-starter>1.4.0</shiro-spring-boot-web-starter>
 		<fastjson2.version>2.0.26</fastjson2.version>
 		<hutool-all.version>5.8.9</hutool-all.version>
+		<flowable-spring-boot-starter>6.7.2</flowable-spring-boot-starter>
 		<campus-assistance.version>0.0.1-SNAPSHOT</campus-assistance.version>
 	</properties>
 
@@ -176,6 +177,18 @@
 				<version>${fastjson2.version}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>org.flowable</groupId>
+				<artifactId>flowable-spring-boot-starter</artifactId>
+				<version>${flowable-spring-boot-starter}</version>
+			</dependency>
+
+			<!-- 参数校验 -->
+			<dependency>
+				<groupId>org.hibernate.validator</groupId>
+				<artifactId>hibernate-validator</artifactId>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -183,6 +196,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
 		<dependency>

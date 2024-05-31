@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api("后台——角色")
+@Api(tags = "后台——角色")
 @RestController
 @RequestMapping("/admin/sysRole")
 public class SysRoleController {
@@ -79,7 +79,9 @@ public class SysRoleController {
     @ApiOperation("改")
     @PutMapping("/{id}")
     public R<?> update(@PathVariable String id, @RequestBody @Valid SysRoleVO.In in) {
-        sysRoleService.updateById(BeanUtils.copyProperties(in, sysRoleService.getById(id)));
+        SysRole sysRole = BeanUtils.copyProperties(in, sysRoleService.getById(id));
+        sysRole.setUpdateTime(null);
+        sysRoleService.updateById(sysRole);
         return R.noContent();
     }
 

@@ -9,4 +9,12 @@ public class ShiroUtils {
         ShiroUser principal = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
         return principal;
     }
+
+    public static String getCurrentUserId() {
+        return getCurrentUser().getId();
+    }
+
+    public static String getCurrentDepartmentCode() {
+        return getCurrentUser().getDepartmentCode();
+    }
 }

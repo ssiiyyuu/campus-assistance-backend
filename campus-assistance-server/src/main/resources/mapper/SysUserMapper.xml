@@ -18,4 +18,24 @@
         <result column="status" property="status" />
     </resultMap>
 
+    <resultMap id="SysUserBaseMap" type="com.siyu.server.entity.dto.SysUserBaseDTO">
+        <result column="id" property="id" />
+        <result column="nickname" property="nickname" />
+        <association select="com.siyu.server.mapper.SysDepartmentMapper.selectBaseDepartmentByCode" column="departmentCode" property="department"
+                     javaType="com.siyu.server.entity.dto.SysDepartmentBaseDTO">
+        </association>
+    </resultMap>
+
+    <select id="selectByCodeAndRoleId" resultType="com.siyu.common.domain.entity.SysUser">
+        SELECT sys_user.* FROM sys_user
+        LEFT OUTER JOIN sys_user_role ON sys_user.id = sys_user_role.user_id
+        WHERE sys_user.department_code = #{departmentCode}
+        AND sys_user_role.role_id = #{roleId}
+    </select>
+    <select id="selectBaseUserById" resultMap="SysUserBaseMap">
+        SELECT sys_user.id, sys_user.nickname, sys_user.department_code AS departmentCode
+        FROM sys_user
+        WHERE sys_user.id = #{userId}
+    </select>
+
 </mapper>

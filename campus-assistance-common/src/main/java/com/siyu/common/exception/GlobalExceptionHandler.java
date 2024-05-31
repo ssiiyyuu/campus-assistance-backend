@@ -6,12 +6,33 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ResponseBody
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public R<String> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+        e.printStackTrace();
+        BindingResult exceptions = e.getBindingResult();
+        if (exceptions.hasErrors()) {
+            List<ObjectError> errors = exceptions.getAllErrors();
+            if (!errors.isEmpty()) {
+                FieldError fieldError = (FieldError) errors.get(0);
+                return R.fail(ErrorStatus.PARAM_ERROR, "参数校验失败[" + fieldError.getDefaultMessage() + "]");
+            }
+        }
+        return R.fail(ErrorStatus.PARAM_ERROR);
+    }
 
     @ResponseBody
     @ExceptionHandler(BusinessException.class)
@@ -24,7 +45,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UnauthorizedException.class)
     public R<String> UnauthorizedException(UnauthorizedException e) {
         e.printStackTrace();
-        return R.fail(ErrorStatus.AUTHOR_ERROR, "未授权访问");
+        return R.fail(ErrorStatus.AUTHOR_ERROR);
     }
 
     @ResponseBody
@@ -38,7 +59,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UnauthenticatedException.class)
     public R<String> UnauthenticatedException(UnauthenticatedException e) {
         e.printStackTrace();
-        return R.fail(ErrorStatus.AUTHEN_ERROR, "未通过认证");
+        return R.fail(ErrorStatus.AUTHEN_ERROR);
     }
 
     @ResponseBody

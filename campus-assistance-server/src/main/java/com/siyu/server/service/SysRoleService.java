@@ -19,4 +19,6 @@ public interface SysRoleService extends IService<SysRole> {
     List<SysRoleVO.Assign> getAssignRoles(String userId);
 
     void assignRoles(String userId, List<String> roleIds);
+
+    SysRole getByName(String name);
 }

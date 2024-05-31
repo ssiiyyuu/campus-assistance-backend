@@ -2,6 +2,7 @@ package com.siyu.server.mapper;
 
 import com.siyu.common.domain.entity.SysRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.siyu.server.entity.dto.SysRoleBaseDTO;
 
 import java.util.List;
 
@@ -15,6 +16,6 @@ import java.util.List;
  */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
-    List<SysRole> selectRolesByUserId(String userId);
-
+    List<SysRole> selectRolesByUserId(String id);
+    List<SysRoleBaseDTO> selectBaseRolesByUserId(String id);
 }

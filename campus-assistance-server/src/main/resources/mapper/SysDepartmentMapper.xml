@@ -30,5 +30,18 @@
     <select id="getMaxCodeByParentId" resultType="java.lang.String">
         SELECT max(code) AS code FROM sys_department WHERE parent_id = #{parentId}
     </select>
+    <select id="selectBaseDepartmentByCode" resultType="com.siyu.server.entity.dto.SysDepartmentBaseDTO">
+        SELECT code,
+        (
+            SELECT
+                group_concat(name ORDER BY LENGTH(code) SEPARATOR '-' )
+            FROM
+                sys_department
+            WHERE
+                #{departmentCode} LIKE CONCAT('', code, '%')
+        ) AS fullName
+        FROM sys_department
+        WHERE code = #{departmetnCode}
+    </select>
 
 </mapper>

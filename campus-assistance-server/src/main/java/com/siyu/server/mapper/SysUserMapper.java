@@ -2,6 +2,10 @@ package com.siyu.server.mapper;
 
 import com.siyu.common.domain.entity.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.siyu.server.entity.dto.SysUserBaseDTO;
+import com.siyu.server.entity.vo.SysUserVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
+    List<SysUser> selectByCodeAndRoleId(String departmentCode, String roleId);
+
+    SysUserBaseDTO selectBaseUserById(String userId);
 }

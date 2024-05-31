@@ -4,13 +4,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+
 public interface ${EntityName}VO {
     @Data
     @ApiModel("${EntityName}VO in")
     class In {
-        @ApiModelProperty(value = "id", hidden = true)
-        private String id;
-        ${VOFields}
+		${VOValidateFields}
     }
 
     @Data
@@ -18,13 +18,14 @@ public interface ${EntityName}VO {
     class Out {
         @ApiModelProperty("id")
         private String id;
-        ${VOFields}
+
+		${VOFields}
     }
 
     @Data
     @ApiModel("${EntityName}VO condition")
     class Condition {
-        ${VOFields}
+		${VOFields}
     }
 
     @Data
@@ -32,6 +33,7 @@ public interface ${EntityName}VO {
     class Table {
         @ApiModelProperty("id")
         private String id;
-        ${VOFields}
+
+		${VOFields}
     }
 }

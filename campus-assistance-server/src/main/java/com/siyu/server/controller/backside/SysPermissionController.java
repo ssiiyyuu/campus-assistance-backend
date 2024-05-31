@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api("后台——权限")
+@Api(tags = "后台——权限")
 @RestController
 @RequestMapping("/admin/sysPermission")
 public class SysPermissionController {
@@ -95,7 +95,9 @@ public class SysPermissionController {
     @ApiOperation("改")
     @PutMapping("/{id}")
     public R<?> update(@PathVariable String id, @RequestBody @Valid SysPermissionVO.In in) {
-        sysPermissionService.updateById(BeanUtils.copyProperties(in, sysPermissionService.getById(id)));
+        SysPermission sysPermission = BeanUtils.copyProperties(in, sysPermissionService.getById(id));
+        sysPermission.setUpdateTime(null);
+        sysPermissionService.updateById(sysPermission);
         return R.noContent();
     }
 

@@ -10,6 +10,7 @@ import com.siyu.common.utils.BeanUtils;
 import ${basePackage}.entity.${EntityName};
 import ${basePackage}.entity.vo.${EntityName}VO;
 import ${basePackage}.service.${EntityName}Service;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +58,9 @@ public class ${EntityName}Controller {
     @ApiOperation("改")
     @PutMapping("/{id}")
     public R<?> update(@PathVariable String id, @RequestBody @Valid ${EntityName}VO.In in) {
-        ${entityName}Service.updateById(BeanUtils.copyProperties(in, ${entityName}Service.getById(id)));
+        ${EntityName} ${entityName} = BeanUtils.copyProperties(in, ${entityName}Service.getById(id));
+        ${entityName}.setUpdateTime(null);
+        ${entityName}Service.updateById(${entityName});
         return R.noContent();
     }
 

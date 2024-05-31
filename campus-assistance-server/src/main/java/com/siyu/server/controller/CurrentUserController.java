@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api("当前用户信息")
+@Api(tags = "当前用户信息")
 @RestController
 @RequestMapping("/current")
 public class CurrentUserController {

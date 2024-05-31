@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+
 public interface SysRoleVO {
 
 	@Data
@@ -22,12 +24,11 @@ public interface SysRoleVO {
     @Data
     @ApiModel("SysRoleVO in")
     class In {
-        @ApiModelProperty(value = "id", hidden = true)
-        private String id;
-        
+		@NotBlank
 	    @ApiModelProperty("角色名称")
 	    private String roleName;
 
+		@NotBlank
 	    @ApiModelProperty("角色编码")
 	    private String roleCode;
 

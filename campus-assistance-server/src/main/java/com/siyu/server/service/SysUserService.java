@@ -2,6 +2,10 @@ package com.siyu.server.service;
 
 import com.siyu.common.domain.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.siyu.server.entity.dto.SysUserBaseDTO;
+import com.siyu.server.entity.vo.SysUserVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysUserService extends IService<SysUser> {
 
+    List<SysUser> getByCodeAndRoleId(String departmentCode, String roleId);
+
+    SysUserBaseDTO getBaseUserById(String userId);
 }

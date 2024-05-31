@@ -30,7 +30,7 @@ public class RoleAuthFilter extends AuthorizationFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
         try {
-            WebUtils.writeInResponse(R.fail(ErrorStatus.AUTHOR_ERROR), (HttpServletResponse) response);
+            WebUtils.write2Response(R.fail(ErrorStatus.AUTHOR_ERROR), (HttpServletResponse) response);
         } catch (Exception e) {
             e.printStackTrace();
         }

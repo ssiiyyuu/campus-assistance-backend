@@ -1,16 +1,18 @@
 package com.siyu.common.enums;
 
+import lombok.Getter;
+
 public enum InformationStatus {
 
-    CREATED("created"),
+    CREATED,
 
-    SCHEDULED("scheduled"),
+    SCHEDULED,
 
-    PUBLISHED("published"),
+    PUBLISHED,
 
-    OFFLINE("offline");
+    OFFLINE;
 
-    InformationStatus(String status) {
-
+    InformationStatus() {
     }
+
 }

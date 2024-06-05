@@ -20,6 +20,7 @@
 		<module>campus-assistance-common</module>
 		<module>campus-assistance-shiro</module>
 		<module>campus-assistance-server</module>
+		<module>campus-assistance-flowable</module>
 	</modules>
 
 	<properties>
@@ -50,6 +51,12 @@
 			<dependency>
 				<groupId>com.siyu</groupId>
 				<artifactId>campus-assistance-server</artifactId>
+				<version>${campus-assistance.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.siyu</groupId>
+				<artifactId>campus-assistance-flowable</artifactId>
 				<version>${campus-assistance.version}</version>
 			</dependency>
 

@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api(tags = "后台——信息发布")
+@Api(tags = "后台——信息模块")
 @RestController
 @RequestMapping("/admin/information")
 public class InformationBacksideController {
@@ -35,7 +35,6 @@ public class InformationBacksideController {
         InformationVO.Condition condition = query.getCondition();
         Page<Information> page = new Page<>(query.getPageNum(), query.getPageSize());
         LambdaQueryWrapper<Information> wrapper = new LambdaQueryWrapper<Information>()
-            .select(Information::getId , Information::getAuthorId, Information::getCover, Information::getTitle, Information::getDepartmentCode, Information::getStatus, Information::getVisits, Information::getCategoryId, Information::getPublishTime)
 			.eq(StringUtils.hasText(condition.getCategoryId()), Information::getCategoryId, condition.getCategoryId())
 			.like(StringUtils.hasText(condition.getTitle()), Information::getTitle, "%" + condition.getTitle() + "%")
 			.eq(StringUtils.hasText(condition.getStatus()), Information::getStatus, condition.getStatus())

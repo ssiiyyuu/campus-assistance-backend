@@ -1,20 +1,19 @@
 package com.siyu.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.siyu.common.enums.ErrorStatus;
 import com.siyu.common.enums.InformationStatus;
 import com.siyu.common.exception.BusinessException;
+import com.siyu.common.mapper.SysDepartmentMapper;
+import com.siyu.common.mapper.SysUserMapper;
 import com.siyu.common.utils.BeanUtils;
 import com.siyu.server.entity.Category;
 import com.siyu.server.entity.Information;
 import com.siyu.server.entity.vo.InformationVO;
 import com.siyu.server.mapper.CategoryMapper;
 import com.siyu.server.mapper.InformationMapper;
-import com.siyu.server.mapper.SysDepartmentMapper;
-import com.siyu.server.mapper.SysUserMapper;
-import com.siyu.server.service.CategoryService;
 import com.siyu.server.service.InformationService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.siyu.shiro.entity.ShiroUser;
 import com.siyu.shiro.utils.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,7 +144,7 @@ public class InformationServiceImpl extends ServiceImpl<InformationMapper, Infor
         if(!ShiroUtils.getCurrentUserId().equals(information.getAuthorId())) {
             throw new BusinessException(ErrorStatus.AUTHOR_ERROR);
         }
-        if(!InformationStatus.CREATED.name().equals(information.getStatus())) {
+        if(!InformationStatus.CREATED.name().equals(information.getStatus()) && !InformationStatus.OFFLINE.name().equals(information.getStatus())) {
             throw new BusinessException(ErrorStatus.STATUS_ERROR, "当前状态为: " + information.getStatus() + ", 不允许发布");
         }
         information.setStatus(InformationStatus.PUBLISHED.name());

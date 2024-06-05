@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Api(tags = "后台——信息分类")
+@Api(tags = "后台——信息分类模块")
 @RestController
 @RequestMapping("/admin/category")
 public class CategoryController {

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.siyu.common.mapper.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.siyu.common.domain.entity.SysUser">
+        <result column="id" property="id" />
+        <result column="deleted" property="deleted" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="nickname" property="nickname" />
+        <result column="avatar" property="avatar" />
+        <result column="email" property="email" />
+        <result column="user_type" property="userType" />
+        <result column="department_code" property="departmentCode" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <resultMap id="SysUserBaseMap" type="com.siyu.common.domain.dto.SysUserBaseDTO">
+        <result column="id" property="id" />
+        <result column="nickname" property="nickname" />
+        <association select="com.siyu.common.mapper.SysDepartmentMapper.selectBaseDepartmentByCode" column="departmentCode" property="department"
+                     javaType="com.siyu.common.domain.dto.SysDepartmentBaseDTO">
+        </association>
+    </resultMap>
+
+    <select id="selectByCodeAndRoleId" resultType="com.siyu.common.domain.entity.SysUser">
+        SELECT sys_user.* FROM sys_user
+        LEFT OUTER JOIN sys_user_role ON sys_user.id = sys_user_role.user_id
+        WHERE sys_user.department_code = #{departmentCode}
+        AND sys_user_role.role_id = #{roleId}
+    </select>
+    <select id="selectBaseUserById" resultMap="SysUserBaseMap">
+        SELECT sys_user.id, sys_user.nickname, sys_user.department_code AS departmentCode
+        FROM sys_user
+        WHERE sys_user.id = #{userId}
+    </select>
+
+</mapper>

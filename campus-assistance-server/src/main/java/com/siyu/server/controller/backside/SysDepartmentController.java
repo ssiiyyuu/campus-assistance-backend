@@ -7,11 +7,10 @@ import com.siyu.common.domain.PaginationQuery;
 import com.siyu.common.domain.PaginationResult;
 import com.siyu.common.domain.R;
 import com.siyu.common.domain.entity.SysDepartment;
+import com.siyu.common.domain.vo.SysDepartmentVO;
+import com.siyu.common.service.SysDepartmentService;
 import com.siyu.common.utils.BeanUtils;
 import com.siyu.common.utils.TreeUtils;
-import com.siyu.server.entity.vo.SysDepartmentVO;
-import com.siyu.server.entity.vo.SysPermissionVO;
-import com.siyu.server.service.SysDepartmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api(tags = "后台——部门")
+@Api(tags = "后台——部门模块")
 @RestController
 @RequestMapping("/admin/sysDepartment")
 public class SysDepartmentController {

@@ -1,9 +1,9 @@
 package com.siyu.server.controller;
 
 import com.siyu.common.domain.R;
+import com.siyu.common.domain.vo.SysPermissionVO;
 import com.siyu.common.utils.BeanUtils;
 import com.siyu.common.utils.TreeUtils;
-import com.siyu.server.entity.vo.SysPermissionVO;
 import com.siyu.shiro.entity.ShiroUser;
 import com.siyu.shiro.utils.ShiroUtils;
 import io.swagger.annotations.Api;

@@ -7,13 +7,14 @@ import com.siyu.common.domain.PaginationQuery;
 import com.siyu.common.domain.PaginationResult;
 import com.siyu.common.domain.R;
 import com.siyu.common.enums.ErrorStatus;
+import com.siyu.common.enums.InformationStatus;
 import com.siyu.common.exception.BusinessException;
+import com.siyu.common.service.SysDepartmentService;
 import com.siyu.server.entity.Category;
 import com.siyu.server.entity.Information;
 import com.siyu.server.entity.vo.InformationVO;
 import com.siyu.server.service.CategoryService;
 import com.siyu.server.service.InformationService;
-import com.siyu.server.service.SysDepartmentService;
 import com.siyu.shiro.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,7 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api(tags = "前台——信息发布")
+@Api(tags = "前台——信息模块")
 @RestController
 @RequestMapping("/frontside/information")
 public class InformationFrontsideController {
@@ -49,13 +50,15 @@ public class InformationFrontsideController {
         }
         Page<Information> page = new Page<>(query.getPageNum(), query.getPageSize());
         LambdaQueryWrapper<Information> wrapper = new LambdaQueryWrapper<Information>()
-                .select(Information::getId , Information::getAuthorId, Information::getCover, Information::getTitle, Information::getDepartmentCode, Information::getVisits, Information::getCategoryId, Information::getPublishTime)
                 .eq(StringUtils.hasText(condition.getCategoryId()), Information::getCategoryId, condition.getCategoryId())
-                .eq(Information::getStatus, "publish")
+                .eq(Information::getStatus, InformationStatus.PUBLISHED.name())
                 .eq(StringUtils.hasText(condition.getDepartmentCode()), Information::getDepartmentCode, condition.getDepartmentCode())
                 .like(StringUtils.hasText(condition.getTitle()), Information::getTitle, "%" + condition.getTitle() + "%")
-                .between(null != condition.getPublishTime() && condition.getPublishTime().size() == 2, Information::getPublishTime, condition.getPublishTime().get(0), condition.getPublishTime().get(1))
                 .orderByDesc(Information::getPublishTime);
+        //使用lambda有空指针异常
+        if(null != condition.getPublishTime() && condition.getPublishTime().size() == 2) {
+            wrapper.between(Information::getPublishTime, condition.getPublishTime().get(0), condition.getPublishTime().get(1));
+        }
         page = informationService.page(page, wrapper);
         List<InformationVO.Table> list = page.getRecords().stream()
                 .map(item -> informationService.setTableBaseInfo(item))
@@ -79,15 +82,18 @@ public class InformationFrontsideController {
 
         Page<Information> page = new Page<>(query.getPageNum(), query.getPageSize());
         LambdaQueryWrapper<Information> wrapper = new LambdaQueryWrapper<Information>()
-                .select(Information::getId , Information::getAuthorId, Information::getCover, Information::getTitle, Information::getDepartmentCode, Information::getVisits, Information::getCategoryId, Information::getPublishTime)
                 //与系统公告与系统动态区别在此 只能查询当前校园范围内的
                 .like(Information::getDepartmentCode, rootCode + "%")
                 .eq(StringUtils.hasText(condition.getCategoryId()), Information::getCategoryId, condition.getCategoryId())
-                .eq(Information::getStatus, "publish")
+                .eq(Information::getStatus, InformationStatus.PUBLISHED.name())
                 .eq(StringUtils.hasText(condition.getDepartmentCode()), Information::getDepartmentCode, condition.getDepartmentCode())
                 .like(StringUtils.hasText(condition.getTitle()), Information::getTitle, "%" + condition.getTitle() + "%")
-                .between(null != condition.getPublishTime() && condition.getPublishTime().size() == 2, Information::getPublishTime, condition.getPublishTime().get(0), condition.getPublishTime().get(1))
                 .orderByDesc(Information::getPublishTime);
+        //使用lambda有空指针异常
+        if(null != condition.getPublishTime() && condition.getPublishTime().size() == 2) {
+            wrapper.between(Information::getPublishTime, condition.getPublishTime().get(0), condition.getPublishTime().get(1));
+        }
+
         page = informationService.page(page, wrapper);
         List<InformationVO.Table> list = page.getRecords().stream()
                 .map(item -> informationService.setTableBaseInfo(item))
@@ -96,20 +102,21 @@ public class InformationFrontsideController {
     }
 
     @ApiOperation("我创建的")
-    @PostMapping("/page/me")
+    @PostMapping("/page/mine")
     public R<PaginationResult<InformationVO.Table>> myInformation(@RequestBody PaginationQuery<InformationVO.Condition> query) {
         String curUserId = ShiroUtils.getCurrentUserId();
         InformationVO.Condition condition = query.getCondition();
         Page<Information> page = new Page<>(query.getPageNum(), query.getPageSize());
         LambdaQueryWrapper<Information> wrapper = new LambdaQueryWrapper<Information>()
-                .select(Information::getId , Information::getAuthorId, Information::getCover, Information::getTitle, Information::getDepartmentCode, Information::getVisits, Information::getCategoryId, Information::getPublishTime)
                 //只能查询作者为当前用户的
                 .eq(Information::getAuthorId, curUserId)
                 .eq(StringUtils.hasText(condition.getCategoryId()), Information::getCategoryId, condition.getCategoryId())
-                .eq(Information::getStatus, "publish")
                 .eq(StringUtils.hasText(condition.getDepartmentCode()), Information::getDepartmentCode, condition.getDepartmentCode())
-                .like(StringUtils.hasText(condition.getTitle()), Information::getTitle, "%" + condition.getTitle() + "%")
-                .between(null != condition.getPublishTime() && condition.getPublishTime().size() == 2, Information::getPublishTime, condition.getPublishTime().get(0), condition.getPublishTime().get(1));
+                .like(StringUtils.hasText(condition.getTitle()), Information::getTitle, "%" + condition.getTitle() + "%");
+        //使用lambda有空指针异常
+        if(null != condition.getPublishTime() && condition.getPublishTime().size() == 2) {
+            wrapper.between(Information::getPublishTime, condition.getPublishTime().get(0), condition.getPublishTime().get(1));
+        }
         page = informationService.page(page, wrapper);
         List<InformationVO.Table> list = page.getRecords().stream()
                 .map(item -> informationService.setTableBaseInfo(item))

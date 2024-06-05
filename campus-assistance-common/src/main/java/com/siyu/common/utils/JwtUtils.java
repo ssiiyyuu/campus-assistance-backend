@@ -3,8 +3,6 @@ package com.siyu.common.utils;
 import com.siyu.common.constants.GlobalConstants;
 import com.siyu.common.enums.ErrorStatus;
 import com.siyu.common.exception.BusinessException;
-import com.siyu.common.utils.BeanUtils;
-import com.siyu.common.utils.WebUtils;
 import io.jsonwebtoken.*;
 
 import javax.servlet.ServletRequest;

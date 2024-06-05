@@ -7,10 +7,10 @@ import com.siyu.common.domain.PaginationQuery;
 import com.siyu.common.domain.PaginationResult;
 import com.siyu.common.domain.R;
 import com.siyu.common.domain.entity.SysPermission;
+import com.siyu.common.domain.vo.SysPermissionVO;
+import com.siyu.common.service.SysPermissionService;
 import com.siyu.common.utils.BeanUtils;
 import com.siyu.common.utils.TreeUtils;
-import com.siyu.server.entity.vo.SysPermissionVO;
-import com.siyu.server.service.SysPermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api(tags = "后台——权限")
+@Api(tags = "后台——权限模块")
 @RestController
 @RequestMapping("/admin/sysPermission")
 public class SysPermissionController {

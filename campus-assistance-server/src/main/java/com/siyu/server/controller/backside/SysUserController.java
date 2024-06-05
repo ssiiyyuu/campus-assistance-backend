@@ -8,13 +8,11 @@ import com.siyu.common.domain.PaginationQuery;
 import com.siyu.common.domain.PaginationResult;
 import com.siyu.common.domain.R;
 import com.siyu.common.domain.entity.SysUser;
+import com.siyu.common.domain.vo.SysUserVO;
 import com.siyu.common.enums.ErrorStatus;
 import com.siyu.common.exception.BusinessException;
+import com.siyu.common.service.SysUserService;
 import com.siyu.common.utils.BeanUtils;
-import com.siyu.server.entity.vo.SysRoleVO;
-import com.siyu.server.entity.vo.SysUserVO;
-import com.siyu.server.service.SysRoleService;
-import com.siyu.server.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -27,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api(tags = "后台——用户")
+@Api(tags = "后台——用户模块")
 @RestController
 @RequestMapping("/admin/user")
 public class SysUserController {

@@ -13,7 +13,7 @@ import java.util.Collections;
 
 public class CodeGenerator {
 
-    private final String tableName = "notification";
+    private final String tableName = "user_notification_read";
     private final String parent = "com.siyu";
     private final String moduleName = "server";
     private final String host = "localhost";

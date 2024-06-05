@@ -6,12 +6,16 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @ApiModel("分页查询结果")
-public class PaginationResult <T> {
+public class PaginationResult <T> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @ApiModelProperty(value = "页码", example = "1")
     private Long pageNum;
 

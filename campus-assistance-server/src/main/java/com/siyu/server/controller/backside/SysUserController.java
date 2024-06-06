@@ -3,7 +3,7 @@ package com.siyu.server.controller.backside;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.siyu.common.constants.GlobalConstants;
+import com.siyu.common.config.GlobalConfig;
 import com.siyu.common.domain.PaginationQuery;
 import com.siyu.common.domain.PaginationResult;
 import com.siyu.common.domain.R;
@@ -65,7 +65,7 @@ public class SysUserController {
             throw new BusinessException(ErrorStatus.INSERT_ERROR, "用户名重复");
         }
         SysUser user = BeanUtils.copyProperties(in, new SysUser());
-        user.setPassword(new Md5Hash(in.getPassword(), GlobalConstants.USER_SALT).toHex());
+        user.setPassword(new Md5Hash(in.getPassword(), GlobalConfig.USER_SALT).toHex());
         sysUserService.save(user);
         return R.noContent();
     }
@@ -80,7 +80,7 @@ public class SysUserController {
             throw new BusinessException(ErrorStatus.UPDATE_ERROR, "用户名重复");
         }
         SysUser user = BeanUtils.copyProperties(in, sysUserService.getById(id));
-        user.setPassword(new Md5Hash(in.getPassword(), GlobalConstants.USER_SALT).toHex());
+        user.setPassword(new Md5Hash(in.getPassword(), GlobalConfig.USER_SALT).toHex());
         user.setUpdateTime(null);
         sysUserService.updateById(user);
         return R.noContent();

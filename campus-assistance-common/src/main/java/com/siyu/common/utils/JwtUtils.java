@@ -1,6 +1,6 @@
 package com.siyu.common.utils;
 
-import com.siyu.common.constants.GlobalConstants;
+import com.siyu.common.config.GlobalConfig;
 import com.siyu.common.enums.ErrorStatus;
 import com.siyu.common.exception.BusinessException;
 import io.jsonwebtoken.*;
@@ -19,9 +19,9 @@ public class JwtUtils {
     public static String generateToken(Map<String, Object> claims) {
         String token = Jwts.builder()
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + GlobalConstants.JWT_EXPIRE))
+                .setExpiration(new Date(System.currentTimeMillis() + GlobalConfig.JWT_EXPIRE))
                 .addClaims(claims)
-                .signWith(SignatureAlgorithm.HS256, GlobalConstants.JWT_SECRET)
+                .signWith(SignatureAlgorithm.HS256, GlobalConfig.JWT_SECRET)
                 .compact();
         return token;
     }
@@ -33,7 +33,7 @@ public class JwtUtils {
 
     public static boolean validateToken(String token) {
         try{
-            Jwts.parser().setSigningKey(GlobalConstants.JWT_SECRET).parse(token);
+            Jwts.parser().setSigningKey(GlobalConfig.JWT_SECRET).parse(token);
             return true;
         } catch (MalformedJwtException e) {
             throw new BusinessException(ErrorStatus.TOKEN_ERROR, "Invalid JWT token: " + e.getMessage());
@@ -49,7 +49,7 @@ public class JwtUtils {
     public static Claims parseToken(String token) {
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey(GlobalConstants.JWT_SECRET)
+                    .setSigningKey(GlobalConfig.JWT_SECRET)
                     .parseClaimsJws(token)
                     .getBody();
             return claims;
@@ -72,7 +72,7 @@ public class JwtUtils {
 
     public static Date parseExpiration(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(GlobalConstants.JWT_SECRET)
+                .setSigningKey(GlobalConfig.JWT_SECRET)
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getExpiration();
@@ -81,6 +81,6 @@ public class JwtUtils {
     public static boolean needRefresh(String token) {
         Date expireDate = parseExpiration(token);
         Date now = new Date();
-        return now.getTime() > (expireDate.getTime() - GlobalConstants.JWT_REFRESH);
+        return now.getTime() > (expireDate.getTime() - GlobalConfig.JWT_REFRESH);
     }
 }

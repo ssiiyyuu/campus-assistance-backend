@@ -29,6 +29,11 @@
             <artifactId>campus-assistance-flowable</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.siyu</groupId>
+            <artifactId>campus-assistance-oss</artifactId>
+        </dependency>
+
         <!-- mysql -->
         <dependency>
             <groupId>mysql</groupId>

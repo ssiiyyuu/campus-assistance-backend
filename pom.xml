@@ -21,6 +21,7 @@
 		<module>campus-assistance-shiro</module>
 		<module>campus-assistance-server</module>
 		<module>campus-assistance-flowable</module>
+		<module>campus-assistance-oss</module>
 	</modules>
 
 	<properties>
@@ -41,6 +42,7 @@
 		<shiro-spring-boot-web-starter>1.4.0</shiro-spring-boot-web-starter>
 		<fastjson2.version>2.0.26</fastjson2.version>
 		<hutool-all.version>5.8.9</hutool-all.version>
+		<qiniu-java-sdk.version>7.13.0</qiniu-java-sdk.version>
 		<flowable-spring-boot-starter>6.7.2</flowable-spring-boot-starter>
 		<campus-assistance.version>0.0.1-SNAPSHOT</campus-assistance.version>
 	</properties>
@@ -57,6 +59,12 @@
 			<dependency>
 				<groupId>com.siyu</groupId>
 				<artifactId>campus-assistance-flowable</artifactId>
+				<version>${campus-assistance.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.siyu</groupId>
+				<artifactId>campus-assistance-oss</artifactId>
 				<version>${campus-assistance.version}</version>
 			</dependency>
 
@@ -194,6 +202,13 @@
 			<dependency>
 				<groupId>org.hibernate.validator</groupId>
 				<artifactId>hibernate-validator</artifactId>
+			</dependency>
+
+			<!-- 七牛云 oss-->
+			<dependency>
+				<groupId>com.qiniu</groupId>
+				<artifactId>qiniu-java-sdk</artifactId>
+				<version>${qiniu-java-sdk.version}</version>
 			</dependency>
 
 		</dependencies>

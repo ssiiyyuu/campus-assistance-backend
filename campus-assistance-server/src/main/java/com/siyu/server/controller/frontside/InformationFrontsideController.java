@@ -18,6 +18,7 @@ import com.siyu.server.service.InformationService;
 import com.siyu.shiro.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -106,10 +107,18 @@ public class InformationFrontsideController {
     public R<PaginationResult<InformationVO.Table>> myInformation(@RequestBody PaginationQuery<InformationVO.Condition> query) {
         String curUserId = ShiroUtils.getCurrentUserId();
         InformationVO.Condition condition = query.getCondition();
+        List<String> categoryIds = categoryService.list(new LambdaQueryWrapper<Category>()
+                        .eq(Category::getName, "校园公告")
+                        .or()
+                        .eq(Category::getName, "校园动态"))
+                .stream().map(Category::getId)
+                .collect(Collectors.toList());
         Page<Information> page = new Page<>(query.getPageNum(), query.getPageSize());
         LambdaQueryWrapper<Information> wrapper = new LambdaQueryWrapper<Information>()
                 //只能查询作者为当前用户的
                 .eq(Information::getAuthorId, curUserId)
+                //前台我创建的只能查校园公告与校园动态
+                .in(Information::getCategoryId, categoryIds)
                 .eq(StringUtils.hasText(condition.getCategoryId()), Information::getCategoryId, condition.getCategoryId())
                 .eq(StringUtils.hasText(condition.getDepartmentCode()), Information::getDepartmentCode, condition.getDepartmentCode())
                 .like(StringUtils.hasText(condition.getTitle()), Information::getTitle, "%" + condition.getTitle() + "%");
@@ -124,18 +133,18 @@ public class InformationFrontsideController {
         return R.ok(PaginationResult.of(page, list));
     }
 
-    @ApiOperation("查看系统公告与系统动态")
-    @GetMapping("/{id}/system")
+    @ApiOperation("查")
+    @GetMapping("/{id}")
     public R<InformationVO.Out> load(@PathVariable String id) {
-        Information information = informationService.loadSystem(id);
+        Information information = informationService.load(id);
         InformationVO.Out out = informationService.setOutBaseInfo(information);
         return R.ok(out);
     }
 
-    @ApiOperation("查看校园公告与校园动态")
-    @GetMapping("/{id}/campus")
-    public R<InformationVO.Out> loadCampus(@PathVariable String id) {
-        Information information = informationService.loadCampus(id);
+    @ApiOperation("编辑时查")
+    @GetMapping("/{id}/edit")
+    public R<InformationVO.Out> loadForEdit(@PathVariable String id) {
+        Information information = informationService.getById(id);
         InformationVO.Out out = informationService.setOutBaseInfo(information);
         return R.ok(out);
     }
@@ -148,7 +157,7 @@ public class InformationFrontsideController {
     }
 
     //需要辅导员权限
-    @RequiresRoles("grade_counselor")
+    @RequiresRoles(value = {"grade_counselor", "department_counselor"}, logical = Logical.OR)
     @ApiOperation("创建校园公告")
     @PostMapping("/campus/announcement")
     public R<?> createCampusAnnouncement(@RequestBody @Valid InformationVO.In in) {

@@ -26,10 +26,16 @@ flowable:
   #自动部署
   check-process-definitions: false
 
+qiniu:
+  accessKey: ${QINIU_ACCESS_KEY}
+  secretKey: ${QINIU_SECRET_KEY}
+  bucketName: siyu-bucket
+  url: http://img.siyu.site
+
 jwt:
   refresh: 24
   expire: 256
-  secret: 8a36b06d-2d0f-4642-b96c-c99c735a02bb
+  secret: ${PROJECT_JWT_SECRET}
 
 user:
-  salt: 8a36b06d-2d0f-4642-b96c-c99c735a02bb
+  salt: ${PROJECT_USER_SALT}

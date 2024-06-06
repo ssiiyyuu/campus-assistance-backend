@@ -1,11 +1,10 @@
 package com.siyu.server.service;
 
-import com.siyu.server.entity.Information;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.siyu.server.entity.Information;
 import com.siyu.server.entity.vo.InformationVO;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * <p>
@@ -27,9 +26,7 @@ public interface InformationService extends IService<Information> {
 
     InformationVO.Out setOutBaseInfo(Information information);
 
-    Information loadSystem(String id);
-
-    Information loadCampus(String id);
+    Information load(String id);
 
     void createCampusDynamics(InformationVO.In in);
 

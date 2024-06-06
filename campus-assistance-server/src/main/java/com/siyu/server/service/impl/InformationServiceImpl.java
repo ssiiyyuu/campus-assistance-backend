@@ -96,25 +96,8 @@ public class InformationServiceImpl extends ServiceImpl<InformationMapper, Infor
 
     @Transactional
     @Override
-    public Information loadSystem(String id) {
+    public Information load(String id) {
         Information information = informationMapper.selectById(id);
-        Category category = categoryMapper.selectById(information.getCategoryId());
-        if(category == null || (!category.getName().equals("系统公告") && !category.getName().equals("系统动态"))) {
-            throw new BusinessException(ErrorStatus.QUERY_ERROR);
-        }
-        information.setVisits(information.getVisits()+1);
-        informationMapper.updateById(information);
-        return information;
-    }
-
-    @Transactional
-    @Override
-    public Information loadCampus(String id) {
-        Information information = informationMapper.selectById(id);
-        Category category = categoryMapper.selectById(information.getCategoryId());
-        if(category == null || (!category.getName().equals("校园公告") && !category.getName().equals("校园动态"))) {
-            throw new BusinessException(ErrorStatus.QUERY_ERROR);
-        }
         information.setVisits(information.getVisits()+1);
         informationMapper.updateById(information);
         return information;

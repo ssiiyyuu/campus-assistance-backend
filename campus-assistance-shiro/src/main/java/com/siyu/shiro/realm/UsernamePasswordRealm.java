@@ -1,7 +1,6 @@
 package com.siyu.shiro.realm;
 
-import com.siyu.common.constants.GlobalConstants;
-import com.siyu.common.utils.BeanUtils;
+import com.siyu.common.config.GlobalConfig;
 import com.siyu.shiro.entity.ShiroUser;
 import com.siyu.shiro.service.ShiroService;
 import org.apache.shiro.authc.*;
@@ -49,7 +48,7 @@ public class UsernamePasswordRealm extends AuthorizingRealm {
         //交给Shiro管理的HashedCredentialsMatcher进行校验
         return new SimpleAuthenticationInfo(user,
                 user.getPassword(),
-                ByteSource.Util.bytes(GlobalConstants.USER_SALT),
+                ByteSource.Util.bytes(GlobalConfig.USER_SALT),
                 "usernamePasswordRealm");
     }
 }

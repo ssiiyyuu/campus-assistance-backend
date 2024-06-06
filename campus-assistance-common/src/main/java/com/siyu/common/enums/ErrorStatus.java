@@ -27,6 +27,8 @@ public enum ErrorStatus {
 
     QUERY_ERROR("S0400", "查询异常"),
 
+    UPLOAD_ERROR("S0500", "上传异常"),
+
     IO_ERROR("S0500", "IO异常"),
 
     UNKNOWN("UNKNOWN", "UNKNOWN");

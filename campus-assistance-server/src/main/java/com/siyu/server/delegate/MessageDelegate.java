@@ -1,6 +1,6 @@
 package com.siyu.server.delegate;
 
-import com.siyu.common.constants.FlowableConstants;
+import com.siyu.flowable.constants.FlowableConstants;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;

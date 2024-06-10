@@ -2,7 +2,7 @@ package com.siyu.flowable.service;
 
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.siyu.common.constants.FlowableConstants;
+import com.siyu.flowable.constants.FlowableConstants;
 import com.siyu.common.domain.PaginationQuery;
 import com.siyu.common.domain.PaginationResult;
 import com.siyu.common.domain.dto.SysUserBaseDTO;
@@ -12,7 +12,6 @@ import com.siyu.common.exception.BusinessException;
 import com.siyu.common.service.SysUserService;
 import com.siyu.flowable.entity.dto.AttachmentDTO;
 import com.siyu.flowable.entity.dto.CommentDTO;
-import com.siyu.flowable.entity.dto.LocationDTO;
 import com.siyu.flowable.entity.mapper.AttachmentDTOMapper;
 import com.siyu.flowable.entity.mapper.CommentDTOMapper;
 import com.siyu.flowable.entity.vo.HolidayVO;
@@ -35,9 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,11 +42,9 @@ public class HolidayService {
 
     private static final String TYPE_KEY = "type";
     private static final String REASON_KEY = "reason";
-    private static final String CREATE_LOCATION_KEY = "create_location";
     private static final String START_TIME_KEY = "start_time";
     private static final String END_TIME_KEY = "end_time";
     private static final String DESTROY_TIME_KEY = "destroy_time";
-    private static final String DESTROY_LOCATION_KEY = "destroy_location";
     private static final String STATUS_KEY = "status";
 
     @Autowired
@@ -74,7 +69,6 @@ public class HolidayService {
         //data
         map.put(TYPE_KEY, create.getType());
         map.put(REASON_KEY, create.getReason());
-        map.put(CREATE_LOCATION_KEY, create.getCreateLocation());
         map.put(START_TIME_KEY, create.getStartTime());
         map.put(END_TIME_KEY, create.getEndTime());
         //status
@@ -164,7 +158,7 @@ public class HolidayService {
             assigned.setCreatTime(DateUtil.toLocalDateTime(process.getStartTime()));
             assigned.setProcessId(process.getId());
             assigned.setInitiator(sysUserService.getById(process.getStartUserId()).getNickname());
-            if(null == process.getEndTime()) {
+            if (null == process.getEndTime()) {
                 Task curTask = taskService.createTaskQuery()
                         .processInstanceId(process.getId())
                         .active()
@@ -176,6 +170,14 @@ public class HolidayService {
                 assigned.setIsAssigned(true);
             }
             return assigned;
+        }).sorted((o1, o2) -> {
+            if (o1.getIsAssigned() && o2.getIsAssigned()) {
+                return o1.getCreatTime().compareTo(o2.getCreatTime());
+            } else if (o1.getIsAssigned()) {
+                return 1;
+            } else {
+                return -1;
+            }
         }).collect(Collectors.toList());
 
         Page<?> page = new Page<>(query.getPageNum(), query.getPageSize(), total);
@@ -224,13 +226,12 @@ public class HolidayService {
     }
 
 
-    public Task destroy(String taskId, String taskName, String userId, HolidayVO.Destroy destroy) {
+    public Task destroy(String taskId, String taskName, String userId) {
         Task task = getTask(taskId, taskName, userId);
 
         Map<String, Object> map = new HashMap<>();
         //data
-        map.put(DESTROY_TIME_KEY, destroy.getDestroyTime());
-        map.put(DESTROY_LOCATION_KEY, destroy.getDestroyLocation());
+        map.put(DESTROY_TIME_KEY, LocalDateTime.now());
         //gateway
         map.put(FlowableConstants.BRANCH_VARIABLE_KEY, FlowableConstants.REJECT);
         //status
@@ -258,8 +259,9 @@ public class HolidayService {
         create.setReason((String) variables.get(REASON_KEY));
         create.setStartTime((LocalDateTime) variables.get(START_TIME_KEY));
         create.setEndTime((LocalDateTime) variables.get(END_TIME_KEY));
-        create.setCreateLocation((LocationDTO) variables.get(CREATE_LOCATION_KEY));
-        List<AttachmentDTO> attachmentDTOS = attachments.get(FlowableConstants.HOLIDAY_ATTACHMENT_NAME).stream()
+
+        List<AttachmentDTO> attachmentDTOS = Optional.ofNullable(attachments.get(FlowableConstants.HOLIDAY_ATTACHMENT_NAME)).orElseGet(ArrayList::new)
+                .stream()
                 .map(item -> AttachmentDTOMapper.copy(item, new AttachmentDTO()))
                 .collect(Collectors.toList());
         create.setAttachments(attachmentDTOS);
@@ -267,7 +269,6 @@ public class HolidayService {
         //销假信息
         HolidayVO.Destroy destroy = new HolidayVO.Destroy();
         destroy.setDestroyTime((LocalDateTime) variables.get(DESTROY_TIME_KEY));
-        destroy.setDestroyLocation((LocationDTO) variables.get(DESTROY_LOCATION_KEY));
 
         //办理信息
         List<CommentDTO> commentDTOS = comments.stream().map(item -> CommentDTOMapper.copy(item, new CommentDTO()))

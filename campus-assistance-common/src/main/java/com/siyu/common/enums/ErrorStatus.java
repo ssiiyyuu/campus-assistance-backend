@@ -29,7 +29,9 @@ public enum ErrorStatus {
 
     UPLOAD_ERROR("S0500", "上传异常"),
 
-    IO_ERROR("S0500", "IO异常"),
+    SOCKET_ERROR("B0100", "socket异常"),
+
+    IO_ERROR("S0600", "IO异常"),
 
     UNKNOWN("UNKNOWN", "UNKNOWN");
 

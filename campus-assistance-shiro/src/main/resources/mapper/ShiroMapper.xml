@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.siyu.shiro.mapper.ShiroMapper">
 
-    <select id="selectShiroUserByUsername" resultType="com.siyu.shiro.entity.ShiroUser">
+    <select id="selectShiroUserByUsername" resultType="com.siyu.common.domain.dto.ShiroUser">
         SELECT * FROM sys_user WHERE sys_user.username = #{username}
     </select>
-    <select id="selectDepartmentByDepartmentCode" resultType="com.siyu.shiro.entity.ShiroDepartment">
+    <select id="selectDepartmentByDepartmentCode" resultType="com.siyu.common.domain.dto.ShiroDepartment">
         SELECT
             code,
             (
@@ -20,7 +20,7 @@
             sys_department
         WHERE code = #{departmentCode}
     </select>
-    <select id="selectRolesByUserId" resultType="com.siyu.shiro.entity.ShiroRole">
+    <select id="selectRolesByUserId" resultType="com.siyu.common.domain.dto.ShiroRole">
         SELECT sys_role.id, sys_role.role_code, sys_role.role_name FROM sys_role
         LEFT OUTER JOIN
             sys_user_role ON sys_user_role.role_id = sys_role.id
@@ -29,7 +29,7 @@
         AND
             sys_role.deleted = false
     </select>
-    <select id="selectPermissionsByRoleIds" resultType="com.siyu.shiro.entity.ShiroPermission">
+    <select id="selectPermissionsByRoleIds" resultType="com.siyu.common.domain.dto.ShiroPermission">
         SELECT sys_permission.id, sys_permission.name, sys_permission.permission_value FROM sys_permission
         LEFT OUTER JOIN
             sys_role_permission ON sys_role_permission.permission_id = sys_permission.id

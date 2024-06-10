@@ -10,7 +10,7 @@ import com.siyu.common.service.SysDepartmentService;
 import com.siyu.common.service.SysUserService;
 import com.siyu.flowable.entity.vo.DormitoryRepairVO;
 import com.siyu.flowable.service.DormitoryRepairService;
-import com.siyu.shiro.entity.ShiroUser;
+import com.siyu.common.domain.dto.ShiroUser;
 import com.siyu.shiro.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

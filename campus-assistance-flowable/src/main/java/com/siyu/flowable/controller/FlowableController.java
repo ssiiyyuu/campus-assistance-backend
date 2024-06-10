@@ -37,7 +37,7 @@ public class FlowableController{
     }
 
     @ApiOperation(value = "流程部署分页查询")
-    @GetMapping("/deployment/page")
+    @PostMapping("/deployment/page")
     public R<PaginationResult<FlowableVO.Deployment>> pageDeployment(@RequestBody PaginationQuery<?> query) {
         PaginationResult<FlowableVO.Deployment> page = flowableService.pageDeployment(query);
         return R.ok(page);

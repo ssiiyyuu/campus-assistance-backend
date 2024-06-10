@@ -2,17 +2,17 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef" exporter="Flowable Open Source Modeler" exporterVersion="6.7.2">
   <process id="campus_report_process_key" name="校园上报流程" isExecutable="true">
     <startEvent id="startEvent1" flowable:initiator="INITIATOR" flowable:formFieldValidation="true"/>
-    <serviceTask id="sid-5F7E14C4-44E3-49B4-828E-91351061D172" name="代办消息通知" flowable:delegateExpression="${messageDelegate}"/>
+    <serviceTask id="sid-5F7E14C4-44E3-49B4-828E-91351061D172" name="代办消息通知" flowable:delegateExpression="${notificationDelegate}"/>
     <sequenceFlow id="sid-696A01CC-1631-40A1-A4ED-4F068C9E01EC" name="发起校园上报" sourceRef="startEvent1" targetRef="sid-5F7E14C4-44E3-49B4-828E-91351061D172"/>
     <userTask id="sid-E720E0B4-3725-4B24-A259-B51C24CCB2D2" name="系级辅导员受理" flowable:formFieldValidation="true" flowable:assignee="${assignee}"/>
     <sequenceFlow id="sid-6B02DFFB-1D11-4281-9D94-7D76734DF4E8" sourceRef="sid-5F7E14C4-44E3-49B4-828E-91351061D172" targetRef="sid-E720E0B4-3725-4B24-A259-B51C24CCB2D2"/>
     <exclusiveGateway id="sid-46AFCFF9-F998-4BFA-94EF-E5C48850C261"/>
     <sequenceFlow id="sid-2DE27622-B53D-4782-8317-356E248B5A44" sourceRef="sid-E720E0B4-3725-4B24-A259-B51C24CCB2D2" targetRef="sid-46AFCFF9-F998-4BFA-94EF-E5C48850C261"/>
-    <serviceTask id="sid-63BF32DC-1C03-4582-AE61-99D502FEBB6B" name="代办消息通知" flowable:delegateExpression="${messageDelegate}"/>
+    <serviceTask id="sid-63BF32DC-1C03-4582-AE61-99D502FEBB6B" name="代办消息通知" flowable:delegateExpression="${notificationDelegate}"/>
     <sequenceFlow id="sid-EBB98150-3E21-4C0E-B380-569D290D7CA0" name="委派" sourceRef="sid-46AFCFF9-F998-4BFA-94EF-E5C48850C261" targetRef="sid-63BF32DC-1C03-4582-AE61-99D502FEBB6B">
       <conditionExpression>${branch == '委派'}</conditionExpression>
     </sequenceFlow>
-    <serviceTask id="sid-26C8CDC5-D656-48F3-8C6B-9AC4BBABF3FE" name="流程办结通知" flowable:delegateExpression="${messageDelegate}"/>
+    <serviceTask id="sid-26C8CDC5-D656-48F3-8C6B-9AC4BBABF3FE" name="流程办结通知" flowable:delegateExpression="${campusReportDelegate}"/>
     <userTask id="sid-71961CC6-28A7-48F8-A895-21DC486A191B" name="年级辅导员受理" flowable:formFieldValidation="true" flowable:assignee="${assignee}"/>
     <sequenceFlow id="sid-98215AF7-54BD-4D88-916C-EC4D46202DA5" sourceRef="sid-63BF32DC-1C03-4582-AE61-99D502FEBB6B" targetRef="sid-71961CC6-28A7-48F8-A895-21DC486A191B"/>
     <sequenceFlow id="sid-FBA8EB3E-BDB2-48BF-AA96-54C1584E6B84" name="办理" sourceRef="sid-46AFCFF9-F998-4BFA-94EF-E5C48850C261" targetRef="sid-26C8CDC5-D656-48F3-8C6B-9AC4BBABF3FE">

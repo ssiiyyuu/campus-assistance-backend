@@ -2,8 +2,8 @@ package com.siyu.shiro.controller;
 
 import com.siyu.common.domain.R;
 import com.siyu.common.utils.WebUtils;
-import com.siyu.shiro.entity.ShiroLogin;
-import com.siyu.shiro.entity.ShiroUser;
+import com.siyu.common.domain.dto.ShiroLogin;
+import com.siyu.common.domain.dto.ShiroUser;
 import com.siyu.shiro.service.ShiroService;
 import com.siyu.shiro.utils.ShiroUtils;
 import io.swagger.annotations.Api;

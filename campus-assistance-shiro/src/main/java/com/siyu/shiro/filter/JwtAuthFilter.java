@@ -3,7 +3,7 @@ package com.siyu.shiro.filter;
 import com.siyu.common.domain.R;
 import com.siyu.common.enums.ErrorStatus;
 import com.siyu.common.exception.BusinessException;
-import com.siyu.shiro.entity.ShiroUser;
+import com.siyu.common.domain.dto.ShiroUser;
 import com.siyu.shiro.token.JwtToken;
 import com.siyu.common.utils.JwtUtils;
 import com.siyu.common.utils.WebUtils;

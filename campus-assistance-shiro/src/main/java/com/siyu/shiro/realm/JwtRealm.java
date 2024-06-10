@@ -1,11 +1,7 @@
 package com.siyu.shiro.realm;
 
-import com.siyu.common.domain.entity.SysPermission;
-import com.siyu.common.domain.entity.SysRole;
-import com.siyu.common.enums.ErrorStatus;
-import com.siyu.common.exception.BusinessException;
-import com.siyu.shiro.entity.ShiroRole;
-import com.siyu.shiro.entity.ShiroUser;
+import com.siyu.common.domain.dto.ShiroRole;
+import com.siyu.common.domain.dto.ShiroUser;
 import com.siyu.shiro.token.JwtToken;
 import com.siyu.common.utils.JwtUtils;
 import org.apache.shiro.authc.AuthenticationException;

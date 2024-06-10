@@ -96,8 +96,7 @@ public class FlowableService {
     }
 
     public PaginationResult<FlowableVO.Deployment> pageDeployment(PaginationQuery<?> query) {
-        DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery()
-                .latest();
+        DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
         long total = deploymentQuery.count();
         List<FlowableVO.Deployment> result = deploymentQuery
                 .listPage((query.getPageNum() - 1) * query.getPageSize(), query.getPageSize()).stream()

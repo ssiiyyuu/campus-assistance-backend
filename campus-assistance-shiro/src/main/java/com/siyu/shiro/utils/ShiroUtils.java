@@ -1,6 +1,6 @@
 package com.siyu.shiro.utils;
 
-import com.siyu.shiro.entity.ShiroUser;
+import com.siyu.common.domain.dto.ShiroUser;
 import org.apache.shiro.SecurityUtils;
 
 public class ShiroUtils {

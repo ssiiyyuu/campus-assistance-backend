@@ -11,7 +11,7 @@ import com.siyu.common.service.SysUserService;
 import com.siyu.flowable.entity.dto.CommentDTO;
 import com.siyu.flowable.entity.vo.HolidayVO;
 import com.siyu.flowable.service.HolidayService;
-import com.siyu.shiro.entity.ShiroUser;
+import com.siyu.common.domain.dto.ShiroUser;
 import com.siyu.shiro.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -60,10 +59,9 @@ public class HolidayController {
 
     @DeleteMapping("/{taskId}")
     @ApiOperation("学生请假流程销假")
-    public R<String> studentDestroy(@PathVariable String taskId, @RequestBody @Valid HolidayVO.Destroy destroy) {
+    public R<String> studentDestroy(@PathVariable String taskId) {
         ShiroUser user = ShiroUtils.getCurrentUser();
-        destroy.setDestroyTime(LocalDateTime.now());
-        Task task = holidayService.destroy(taskId, "发起人销假", user.getId(), destroy);
+        Task task = holidayService.destroy(taskId, "发起人销假", user.getId());
         return R.ok(task.getProcessInstanceId());
     }
 

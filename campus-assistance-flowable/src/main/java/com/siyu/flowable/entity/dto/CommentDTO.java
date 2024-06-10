@@ -1,11 +1,15 @@
 package com.siyu.flowable.entity.dto;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommentDTO {
 
     @ApiModelProperty(hidden = true)

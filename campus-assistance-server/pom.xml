@@ -31,7 +31,17 @@
 
         <dependency>
             <groupId>com.siyu</groupId>
+            <artifactId>campus-assistance-websocket</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.siyu</groupId>
             <artifactId>campus-assistance-oss</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.siyu</groupId>
+            <artifactId>campus-assistance-rabbitMQ</artifactId>
         </dependency>
 
         <!-- mysql -->

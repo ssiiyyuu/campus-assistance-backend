@@ -4,7 +4,7 @@ import com.siyu.common.domain.R;
 import com.siyu.common.domain.vo.SysPermissionVO;
 import com.siyu.common.utils.BeanUtils;
 import com.siyu.common.utils.TreeUtils;
-import com.siyu.shiro.entity.ShiroUser;
+import com.siyu.common.domain.dto.ShiroUser;
 import com.siyu.shiro.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;

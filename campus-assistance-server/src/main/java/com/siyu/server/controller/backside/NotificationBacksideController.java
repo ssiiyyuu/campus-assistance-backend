@@ -6,11 +6,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.siyu.common.domain.PaginationQuery;
 import com.siyu.common.domain.PaginationResult;
 import com.siyu.common.domain.R;
+import com.siyu.common.domain.dto.ShiroUser;
+import com.siyu.common.domain.entity.Notification;
+import com.siyu.common.domain.vo.NotificationVO;
+import com.siyu.common.service.NotificationService;
 import com.siyu.common.utils.BeanUtils;
-import com.siyu.server.entity.Notification;
-import com.siyu.server.entity.vo.NotificationVO;
-import com.siyu.server.service.NotificationService;
-import com.siyu.shiro.entity.ShiroUser;
+import com.siyu.rabbitMQ.service.MQService;
 import com.siyu.shiro.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +31,9 @@ public class NotificationBacksideController {
 
     @Autowired
     private NotificationService notificationService;
+
+    @Autowired
+    private MQService mqService;
 
     @ApiOperation("分页查询")
     @PostMapping("/page")
@@ -56,8 +60,8 @@ public class NotificationBacksideController {
     @PostMapping
     public R<?> create(@RequestBody @Valid NotificationVO.In in) {
         ShiroUser currentUser = ShiroUtils.getCurrentUser();
-        notificationService.sendAdminNotification(currentUser, in);
-        //TODO
+        Notification notification = notificationService.generateAdminNotification(currentUser, in);
+        mqService.sendMessageToNotificationExchange(notification);
         return R.noContent();
     }
 

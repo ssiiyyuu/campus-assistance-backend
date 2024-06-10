@@ -1,9 +1,9 @@
 package com.siyu.shiro.mapper;
 
-import com.siyu.shiro.entity.ShiroDepartment;
-import com.siyu.shiro.entity.ShiroPermission;
-import com.siyu.shiro.entity.ShiroRole;
-import com.siyu.shiro.entity.ShiroUser;
+import com.siyu.common.domain.dto.ShiroDepartment;
+import com.siyu.common.domain.dto.ShiroPermission;
+import com.siyu.common.domain.dto.ShiroRole;
+import com.siyu.common.domain.dto.ShiroUser;
 
 import java.util.List;
 

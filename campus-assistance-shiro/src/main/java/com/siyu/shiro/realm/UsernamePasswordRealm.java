@@ -1,7 +1,7 @@
 package com.siyu.shiro.realm;
 
 import com.siyu.common.config.GlobalConfig;
-import com.siyu.shiro.entity.ShiroUser;
+import com.siyu.common.domain.dto.ShiroUser;
 import com.siyu.shiro.service.ShiroService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;

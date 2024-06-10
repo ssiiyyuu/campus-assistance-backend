@@ -14,7 +14,7 @@ import com.siyu.server.entity.vo.InformationVO;
 import com.siyu.server.mapper.CategoryMapper;
 import com.siyu.server.mapper.InformationMapper;
 import com.siyu.server.service.InformationService;
-import com.siyu.shiro.entity.ShiroUser;
+import com.siyu.common.domain.dto.ShiroUser;
 import com.siyu.shiro.utils.ShiroUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
 package com.siyu.shiro.service;
 
 
+import com.siyu.common.domain.dto.*;
 import com.siyu.common.utils.JwtUtils;
-import com.siyu.shiro.entity.*;
 import com.siyu.shiro.mapper.ShiroMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;

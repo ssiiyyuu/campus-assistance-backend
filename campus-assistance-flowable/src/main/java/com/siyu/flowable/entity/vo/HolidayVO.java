@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.siyu.common.domain.dto.SysUserBaseDTO;
 import com.siyu.flowable.entity.dto.AttachmentDTO;
 import com.siyu.flowable.entity.dto.CommentDTO;
-import com.siyu.flowable.entity.dto.LocationDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -31,11 +29,6 @@ public interface HolidayVO {
         @Length(min = 10)
         @ApiModelProperty(value = "请假原因")
         private String reason;
-
-        @Valid
-        @NotNull
-        @ApiModelProperty(value = "当前请假地址")
-        private LocationDTO createLocation;
 
         @NotNull
         @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
@@ -56,11 +49,6 @@ public interface HolidayVO {
     @AllArgsConstructor
     @ApiModel("请假流程销假")
     class Destroy {
-
-        @Valid
-        @NotNull
-        @ApiModelProperty(value = "销假地址")
-        private LocationDTO destroyLocation;
 
         @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
         @ApiModelProperty(value = "销假时间", hidden = true)

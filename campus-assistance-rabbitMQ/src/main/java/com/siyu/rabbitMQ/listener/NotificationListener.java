@@ -1,8 +1,8 @@
-package com.siyu.server.listener;
+package com.siyu.rabbitMQ.listener;
 
-import com.siyu.rabbitMQ.constants.MQConstants;
 import com.siyu.common.domain.entity.Notification;
 import com.siyu.common.service.NotificationService;
+import com.siyu.rabbitMQ.constants.MQConstants;
 import com.siyu.websocket.utils.WebSocketUtils;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;

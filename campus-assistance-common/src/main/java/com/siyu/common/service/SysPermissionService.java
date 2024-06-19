@@ -21,4 +21,7 @@ public interface SysPermissionService extends IService<SysPermission> {
     void assignPermissions(String roleId, List<String> permissionIds);
 
     List<SysPermissionVO.Tree> getAssignPermissions(String roleId);
+
+    List<SysPermission> menuListByRoleIds(List<String> roleIds);
+    List<SysPermission> buttonListByRoleIds(List<String> roleIds);
 }

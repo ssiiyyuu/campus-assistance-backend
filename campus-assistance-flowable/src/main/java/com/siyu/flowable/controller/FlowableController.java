@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,10 +53,10 @@ public class FlowableController{
 
     @ApiOperation(value = "显示流程图")
     @GetMapping(value = "/process/diagram/{processId}")
-    public void diagramProcess(@PathVariable String processId, HttpServletResponse httpServletResponse) {
+    public void diagramProcess(@PathVariable String processId, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         InputStream inputStream = flowableService.getDiagram(processId);
         try {
-            WebUtils.writePNG2Response(inputStream, httpServletResponse);
+            WebUtils.writePNG2Response(inputStream, httpServletRequest, httpServletResponse);
         } catch (IOException e) {
             throw new BusinessException(ErrorStatus.IO_ERROR);
         }

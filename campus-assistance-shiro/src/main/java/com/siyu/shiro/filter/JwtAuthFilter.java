@@ -1,12 +1,12 @@
 package com.siyu.shiro.filter;
 
 import com.siyu.common.domain.R;
+import com.siyu.common.domain.dto.ShiroUser;
 import com.siyu.common.enums.ErrorStatus;
 import com.siyu.common.exception.BusinessException;
-import com.siyu.common.domain.dto.ShiroUser;
-import com.siyu.shiro.token.JwtToken;
 import com.siyu.common.utils.JwtUtils;
 import com.siyu.common.utils.WebUtils;
+import com.siyu.shiro.token.JwtToken;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -15,10 +15,15 @@ import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
 public class JwtAuthFilter extends AuthenticatingFilter {
+    @Override
+    protected void postHandle(ServletRequest request, ServletResponse response){
+        WebUtils.fillCorsHeads((HttpServletRequest) request, (HttpServletResponse) response);
+    }
 
     /**
      * executeLogin()中调用
@@ -34,6 +39,9 @@ public class JwtAuthFilter extends AuthenticatingFilter {
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        if(((HttpServletRequest) request).getMethod().equalsIgnoreCase("options")) {
+            return true;
+        }
         //不拦截登录请求
         if(this.isLoginRequest(request, response)) {
             return true;
@@ -95,7 +103,7 @@ public class JwtAuthFilter extends AuthenticatingFilter {
      */
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
-        WebUtils.write2Response(R.fail(ErrorStatus.TOKEN_ERROR), (HttpServletResponse) servletResponse);
+        WebUtils.write2Response(R.fail(ErrorStatus.TOKEN_ERROR), (HttpServletRequest) servletRequest,(HttpServletResponse) servletResponse);
         return false;
     }
 }

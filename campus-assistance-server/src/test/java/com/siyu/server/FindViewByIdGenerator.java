@@ -9,7 +9,7 @@ public class FindViewByIdGenerator {
 
     private final static String initPrefix = "view.";
 
-    private final static String path = "D:\\Code\\Android\\campus-assistance-frontend\\app\\src\\main\\res\\layout\\fragment_notification_load.xml";
+    private final static String path = "D:\\Code\\Android\\campus-assistance-frontend\\app\\src\\main\\res\\layout\\fragment_me.xml";
 
     public static void main(String[] args) throws IOException {
         List<String> ids = new ArrayList<>();

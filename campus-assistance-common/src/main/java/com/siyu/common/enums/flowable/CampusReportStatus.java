@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum CampusReportStatus {
 
-    REPORTED("已上报待办理"),
+    REPORTED("已上报"),
 
     REJECTED("已驳回"),
 

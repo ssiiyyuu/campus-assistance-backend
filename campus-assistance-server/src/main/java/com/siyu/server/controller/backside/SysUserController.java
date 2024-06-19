@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Api(tags = "后台——用户模块")
+
 @RestController
 @RequestMapping("/admin/user")
 public class SysUserController {
@@ -41,7 +42,7 @@ public class SysUserController {
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<SysUser>()
                 .eq(StringUtils.hasText(condition.getUsername()), SysUser::getUsername, condition.getUsername())
                 .eq(StringUtils.hasText(condition.getUserType()), SysUser::getUserType, condition.getUserType())
-                .eq(StringUtils.hasText(condition.getDepartmentCode()), SysUser::getDepartmentCode, condition.getDepartmentCode());
+                .eq(condition.getStatus() != null, SysUser::getStatus, condition.getStatus());
         page = sysUserService.page(page, wrapper);
         List<SysUserVO.Table> list = page.getRecords().stream()
                 .map(item -> BeanUtils.copyProperties(item, new SysUserVO.Table()))
@@ -80,7 +81,6 @@ public class SysUserController {
             throw new BusinessException(ErrorStatus.UPDATE_ERROR, "用户名重复");
         }
         SysUser user = BeanUtils.copyProperties(in, sysUserService.getById(id));
-        user.setPassword(new Md5Hash(in.getPassword(), GlobalConfig.USER_SALT).toHex());
         user.setUpdateTime(null);
         sysUserService.updateById(user);
         return R.noContent();

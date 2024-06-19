@@ -29,15 +29,6 @@
         AND
             sys_role.deleted = false
     </select>
-    <select id="selectPermissionsByRoleIds" resultType="com.siyu.common.domain.dto.ShiroPermission">
-        SELECT sys_permission.id, sys_permission.name, sys_permission.permission_value FROM sys_permission
-        LEFT OUTER JOIN
-            sys_role_permission ON sys_role_permission.permission_id = sys_permission.id
-        WHERE
-            sys_role_permission.role_id IN (#{roleIds})
-        AND
-            sys_permission.deleted = false
-    </select>
 
 
 </mapper>

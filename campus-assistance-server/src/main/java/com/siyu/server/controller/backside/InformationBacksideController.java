@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Api(tags = "后台——信息模块")
+
 @RestController
 @RequestMapping("/admin/information")
 public class InformationBacksideController {

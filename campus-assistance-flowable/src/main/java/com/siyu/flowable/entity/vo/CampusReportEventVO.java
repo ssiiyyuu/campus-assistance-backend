@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.List;
 
 public interface CampusReportEventVO {
@@ -19,8 +20,7 @@ public interface CampusReportEventVO {
 		@NotBlank
 	    private String name;
 
-	    @ApiModelProperty("校园上报事件登记")
-		@NotBlank
+	    @ApiModelProperty("校园上报事件等级")
 	    private String level;
 
     }
@@ -70,7 +70,10 @@ public interface CampusReportEventVO {
 
 	@Data
 	@ApiModel("CategoryVO tree")
-	class Tree implements TreeNode<Tree, String> {
+	class Tree implements TreeNode<Tree, String>, Serializable {
+
+		private static final long serialVersionUID = 1L;
+
 		@ApiModelProperty("id")
 		private String id;
 

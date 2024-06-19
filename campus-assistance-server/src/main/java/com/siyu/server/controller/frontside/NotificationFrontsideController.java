@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api(tags = "前台——通知模块")
+
 @RestController
 @RequestMapping("/frontside/notification")
 public class NotificationFrontsideController {

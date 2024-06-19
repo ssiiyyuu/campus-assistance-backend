@@ -37,10 +37,23 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    public List<SysUser> getByPrefixCodeAndRoleId(String departmentCode, String roleId) {
+        return sysUserMapper.selectByPrefixCodeAndRoleId(departmentCode, roleId);
+    }
+
+    @Override
     public List<SysUser> getUserByCodeAndRoleName(String departmentCode, String roleName) {
         String roleId = sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>()
                 .eq(SysRole::getRoleName, roleName)).getId();
         return getByCodeAndRoleId(departmentCode, roleId);
+    }
+
+
+    @Override
+    public List<SysUser> getUserByPrefixCodeAndRoleName(String departmentCode, String roleName) {
+        String roleId = sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>()
+                .eq(SysRole::getRoleName, roleName)).getId();
+        return getByPrefixCodeAndRoleId(departmentCode, roleId);
     }
 
     @Override

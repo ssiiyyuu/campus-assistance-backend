@@ -4,10 +4,12 @@ import com.siyu.common.domain.PaginationQuery;
 import com.siyu.common.domain.PaginationResult;
 import com.siyu.common.domain.R;
 import com.siyu.common.domain.entity.SysUser;
+import com.siyu.common.domain.vo.SysUserVO;
 import com.siyu.common.enums.DepartmentLevel;
 import com.siyu.common.enums.ErrorStatus;
 import com.siyu.common.service.SysDepartmentService;
 import com.siyu.common.service.SysUserService;
+import com.siyu.common.utils.BeanUtils;
 import com.siyu.flowable.entity.dto.CommentDTO;
 import com.siyu.flowable.entity.vo.HolidayVO;
 import com.siyu.flowable.service.HolidayService;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Api(tags = "工作流——请假流程")
@@ -48,12 +51,11 @@ public class HolidayController {
     @ApiOperation("学生发起请假流程")
     public R<String> studentCreate(@RequestBody @Valid HolidayVO.Create create) {
         ShiroUser user = ShiroUtils.getCurrentUser();
-        List<SysUser> assignees = sysUserService.getUserByCodeAndRoleName(SysDepartmentService.getLevelCode(user.getDepartmentCode(), DepartmentLevel.GRADE), "年级辅导员");
-        if(assignees.isEmpty()) {
+        SysUser assignee = sysUserService.getById(create.getAssigneeId());
+        if(!SysDepartmentService.getLevelCode(user.getDepartmentCode(), DepartmentLevel.GRADE).equals(assignee.getDepartmentCode())) {
             return R.fail(ErrorStatus.QUERY_ERROR);
         }
-        String assigneeId = assignees.get(0).getId();
-        ProcessInstance processInstance = holidayService.create(create, user.getId(), assigneeId);
+        ProcessInstance processInstance = holidayService.create(create, user.getId(), create.getAssigneeId());
         return R.ok(processInstance.getId());
     }
 
@@ -126,4 +128,14 @@ public class HolidayController {
         return R.ok(result);
     }
 
+    @GetMapping("/assignee/list")
+    @ApiOperation("可选择受理人")
+    public R<List<SysUserVO.Out>> getAssignee() {
+        ShiroUser currentUser = ShiroUtils.getCurrentUser();
+        String targetCode = SysDepartmentService.getLevelCode(currentUser.getDepartmentCode(), DepartmentLevel.GRADE);
+        List<SysUserVO.Out> assignees = sysUserService.getUserByCodeAndRoleName(targetCode, "年级辅导员")
+                .stream().map(item -> BeanUtils.copyProperties(item, new SysUserVO.Out()))
+                .collect(Collectors.toList());
+        return R.ok(assignees);
+    }
 }

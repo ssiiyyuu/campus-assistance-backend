@@ -20,6 +20,10 @@ public interface SysUserService extends IService<SysUser> {
 
     List<SysUser> getUserByCodeAndRoleName(String departmentCode, String roleName);
 
+    List<SysUser> getByPrefixCodeAndRoleId(String departmentCode, String roleId);
+
+    List<SysUser> getUserByPrefixCodeAndRoleName(String departmentCode, String roleName);
+
     SysUserBaseDTO getBaseUserById(String userId);
 
     /**

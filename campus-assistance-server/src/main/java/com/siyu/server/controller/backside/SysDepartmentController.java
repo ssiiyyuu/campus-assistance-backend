@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Api(tags = "后台——部门模块")
+
 @RestController
 @RequestMapping("/admin/sysDepartment")
 public class SysDepartmentController {

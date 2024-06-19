@@ -8,6 +8,7 @@ import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -30,7 +31,7 @@ public class RoleAuthFilter extends AuthorizationFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
         try {
-            WebUtils.write2Response(R.fail(ErrorStatus.AUTHOR_ERROR), (HttpServletResponse) response);
+            WebUtils.write2Response(R.fail(ErrorStatus.AUTHOR_ERROR), (HttpServletRequest) request, (HttpServletResponse) response);
         } catch (Exception e) {
             e.printStackTrace();
         }

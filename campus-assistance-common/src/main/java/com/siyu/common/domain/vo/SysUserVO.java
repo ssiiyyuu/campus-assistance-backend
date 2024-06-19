@@ -27,6 +27,9 @@ public interface SysUserVO {
         @ApiModelProperty("用户邮箱")
         private String email;
 
+        @ApiModelProperty("状态(0:禁止,1:正常)")
+        private Integer status;
+
         @NotBlank
         @ApiModelProperty("用户类型")
         private String userType;
@@ -57,6 +60,9 @@ public interface SysUserVO {
         @ApiModelProperty("用户类型")
         private String userType;
 
+        @ApiModelProperty("状态(0:禁止,1:正常)")
+        private Integer status;
+
         @ApiModelProperty("部门编码")
         private String departmentCode;
     }
@@ -70,8 +76,8 @@ public interface SysUserVO {
         @ApiModelProperty("用户类型")
         private String userType;
 
-        @ApiModelProperty("部门编码")
-        private String departmentCode;
+        @ApiModelProperty("状态(0:禁止,1:正常)")
+        private Integer status;
     }
 
     @Data
@@ -94,6 +100,9 @@ public interface SysUserVO {
 
         @ApiModelProperty("用户类型")
         private String userType;
+
+        @ApiModelProperty("状态(0:禁止,1:正常)")
+        private Integer status;
 
         @ApiModelProperty("部门编码")
         private String departmentCode;

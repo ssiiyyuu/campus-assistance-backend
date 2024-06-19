@@ -19,9 +19,31 @@
     </resultMap>
     <select id="selectPermissionsByRoleId" resultType="com.siyu.common.domain.entity.SysPermission">
         SELECT * FROM sys_permission
-            LEFT OUTER JOIN sys_role_permission ON sys_permission.id = sys_role_permission.permission_id
-            WHERE sys_role_permission.role_id = #{roleId}
-            AND sys_permission.deleted = false;
+        LEFT OUTER JOIN sys_role_permission ON sys_permission.id = sys_role_permission.permission_id
+        WHERE sys_role_permission.role_id = #{roleId}
+        AND sys_permission.deleted = false;
+    </select>
+    <select id="menuListByRoleIds" resultType="com.siyu.common.domain.entity.SysPermission">
+        SELECT * FROM sys_permission
+        LEFT OUTER JOIN sys_role_permission ON sys_permission.id = sys_role_permission.permission_id
+        WHERE sys_role_permission.role_id IN
+        <foreach collection="roleIds" index="index" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+        AND sys_permission.type = 1
+        AND sys_permission.status = true
+        AND sys_permission.deleted = false;
+    </select>
+    <select id="buttonListByRoleIds" resultType="com.siyu.common.domain.entity.SysPermission">
+        SELECT * FROM sys_permission
+        LEFT OUTER JOIN sys_role_permission ON sys_permission.id = sys_role_permission.permission_id
+        WHERE sys_role_permission.role_id IN
+        <foreach collection="roleIds" index="index" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+        AND sys_permission.type = 2
+        AND sys_permission.status = true
+        AND sys_permission.deleted = false;
     </select>
 
 </mapper>

@@ -24,9 +24,10 @@ import java.util.stream.Collectors;
 
 
 @Api(tags = "后台——信息分类模块")
+
 @RestController
 @RequestMapping("/admin/category")
-public class CategoryController {
+public class CategoryBacksideController {
 
     @Autowired
     private CategoryService categoryService;

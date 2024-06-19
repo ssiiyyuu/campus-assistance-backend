@@ -30,6 +30,10 @@ public interface HolidayVO {
         @ApiModelProperty(value = "请假原因")
         private String reason;
 
+        @NotBlank
+        @ApiModelProperty(value = "办理人Id")
+        private String assigneeId;
+
         @NotNull
         @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
         @ApiModelProperty(value = "假期开始时间")

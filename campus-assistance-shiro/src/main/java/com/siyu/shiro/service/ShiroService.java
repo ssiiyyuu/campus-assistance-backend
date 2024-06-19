@@ -21,7 +21,6 @@ public class ShiroService {
 
     public ShiroDepartment getDepartmentByDepartmentCode(String departmentCode) {return shiroMapper.selectDepartmentByDepartmentCode(departmentCode);}
 
-    public List<ShiroPermission> getPermissionsByRoleIds(List<String> roleIds) {return shiroMapper.selectPermissionsByRoleIds(roleIds);}
 
     public List<ShiroRole> getRolesByUserId(String userId) {return shiroMapper.selectRolesByUserId(userId);}
 
@@ -39,11 +38,9 @@ public class ShiroService {
 
         ShiroDepartment department = getDepartmentByDepartmentCode(user.getDepartmentCode());
         List<ShiroRole> roles = getRolesByUserId(user.getId());
-        List<ShiroPermission> permissions = getPermissionsByRoleIds(roles.stream().map(ShiroRole::getId).collect(Collectors.toList()));
         user.setPassword(null);
         user.setDepartment(department);
         user.setRoles(roles);
-        user.setPermissions(permissions);
         return JwtUtils.generateToken(user);
     }
 

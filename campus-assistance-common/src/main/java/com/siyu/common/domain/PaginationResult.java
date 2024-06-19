@@ -31,6 +31,17 @@ public class PaginationResult <T> implements Serializable {
     @ApiModelProperty(value = "结果数据列表")
     private List<T> data;
 
+    /**
+     * 手动分页-伪分页
+     */
+    public static <T> PaginationResult<T> of(int pageNum, int pageSize, List<T> data) {
+        int total = data.size();
+        int totalPages = data.size() / pageSize + 1;
+        int start = Math.max((pageNum - 1) * pageSize, 0);
+        int end = Math.min(pageNum * pageSize, data.size());
+        return new PaginationResult<>((long) pageNum, (long) pageSize, (long) total, (long) totalPages, data.subList(start, end));
+    }
+
     public static <T> PaginationResult<T> of(Page<T> page) {
         return new PaginationResult<>(page.getCurrent(), page.getSize(), page.getTotal(), page.getPages(), page.getRecords());
     }

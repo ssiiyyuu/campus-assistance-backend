@@ -83,7 +83,7 @@ public interface SysDepartmentService extends IService<SysDepartment> {
         if(parentDepartmentCode.equals(targetDepartmentCode)) {
             return false;
         }
-        return parentDepartmentCode.contains(targetDepartmentCode);
+        return targetDepartmentCode.contains(parentDepartmentCode);
     }
 
     void deleteTree(String id);

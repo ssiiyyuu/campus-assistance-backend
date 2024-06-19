@@ -17,11 +17,16 @@ public class WebUtils {
 
     public static final String AUTHENTICATION_HEADER = "Authorization";
 
-    public static void writePNG2Response(InputStream inputStream, HttpServletResponse response) throws IOException {
+    public static void fillCorsHeads(HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader("Access-control-Allow-Origin", request.getHeader("Origin"));
+        response.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS,HEAD");
+        response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
+    }
+    public static void writePNG2Response(InputStream inputStream, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("image/png;charset=UTF-8");
         response.setStatus(HttpStatus.OK.value());
-
+        fillCorsHeads(request, response);
         byte[] buf = new byte[1024];
         int length;
         OutputStream out = response.getOutputStream();
@@ -31,11 +36,11 @@ public class WebUtils {
         out.close();
     }
 
-    public static void write2Response(Object object, HttpServletResponse response) throws Exception {
+    public static void write2Response(Object object, HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpStatus.OK.value());
-
+        fillCorsHeads(request, response);
         PrintWriter writer = response.getWriter();
 
         String json = JSONObject.toJSONString(object, JSONWriter.Feature.WriteMapNullValue);

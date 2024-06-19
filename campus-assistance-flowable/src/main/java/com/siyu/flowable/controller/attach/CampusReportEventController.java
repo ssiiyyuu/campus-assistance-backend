@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Api(tags = "工作流——校园上报事件模块")
 @RestController
-@RequestMapping("/campusReportEvent")
+@RequestMapping("/flowable/campusReportEvent")
 public class CampusReportEventController {
 
     @Autowired

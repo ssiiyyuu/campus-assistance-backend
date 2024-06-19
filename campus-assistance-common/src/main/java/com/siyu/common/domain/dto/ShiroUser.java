@@ -31,6 +31,4 @@ public class ShiroUser implements Serializable {
     private ShiroDepartment department;
 
     private List<ShiroRole> roles;
-
-    private List<ShiroPermission> permissions;
 }

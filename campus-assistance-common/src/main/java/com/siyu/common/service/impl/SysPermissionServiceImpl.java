@@ -64,6 +64,14 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     }
 
     @Override
+    public List<SysPermission> menuListByRoleIds(List<String> roleIds) {
+        return sysPermissionMapper.menuListByRoleIds(roleIds);
+    }
+    @Override
+    public List<SysPermission> buttonListByRoleIds(List<String> roleIds) {
+        return sysPermissionMapper.buttonListByRoleIds(roleIds);
+    }
+    @Override
     public void deleteTree(String id) {
         List<String> ids = new ArrayList<>();
         getChildIdsByParentId(id, ids);

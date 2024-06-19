@@ -2,6 +2,7 @@ package com.siyu.flowable.service;
 
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.siyu.common.domain.entity.SysUser;
 import com.siyu.flowable.constants.FlowableConstants;
 import com.siyu.common.domain.PaginationQuery;
 import com.siyu.common.domain.PaginationResult;
@@ -34,9 +35,7 @@ import org.flowable.variable.api.history.HistoricVariableInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -148,7 +147,9 @@ public class CampusReportService {
 
     public Task handover(String taskId, String taskName, String userId, String delegateId, String comment) {
         Task task = getTask(taskId, taskName, userId);
-        taskService.addComment(task.getId(), task.getProcessInstanceId(), FlowableConstants.HANDOVER_COMMENT_TYPE, comment);
+        SysUser from = sysUserService.getById(userId);
+        SysUser to = sysUserService.getById(delegateId);
+        taskService.addComment(task.getId(), task.getProcessInstanceId(), FlowableConstants.HANDOVER_COMMENT_TYPE, "[" + from.getNickname() + "] -> [" + to.getNickname() + "]: " + comment);
         taskService.setAssignee(taskId, delegateId);
 
         return task;
@@ -175,14 +176,16 @@ public class CampusReportService {
         create.setLevel(event.getLevel());
         create.setDescription((String) variables.get(DESCRIPTION_KEY));
         create.setCreateLocation((String) variables.get(CREATE_LOCATION_KEY));
-        List<AttachmentDTO> attachmentCreateDTOS = attachments.get(FlowableConstants.CREATE_ATTACHMENT_NAME).stream()
+        List<AttachmentDTO> attachmentCreateDTOS = Optional.ofNullable(attachments.get(FlowableConstants.CREATE_ATTACHMENT_NAME)).orElseGet(ArrayList::new)
+                .stream()
                 .map(item -> AttachmentDTOMapper.copy(item, new AttachmentDTO()))
                 .collect(Collectors.toList());
         create.setAttachments(attachmentCreateDTOS);
 
         //办理信息
         CampusReportVO.Transact transact = new CampusReportVO.Transact();
-        List<AttachmentDTO> attachmentDoneDTOS = attachments.get(FlowableConstants.DONE_ATTACHMENT_NAME).stream()
+        List<AttachmentDTO> attachmentDoneDTOS = Optional.ofNullable(attachments.get(FlowableConstants.DONE_ATTACHMENT_NAME)).orElseGet(ArrayList::new)
+                .stream()
                 .map(item -> AttachmentDTOMapper.copy(item, new AttachmentDTO()))
                 .collect(Collectors.toList());
         transact.setAttachments(attachmentDoneDTOS);
@@ -248,7 +251,7 @@ public class CampusReportService {
 
     public PaginationResult<CampusReportVO.Assigned> myAssigned(String id, PaginationQuery<?> query) {
         HistoricTaskInstanceQuery taskInstanceQuery = historyService.createHistoricTaskInstanceQuery()
-                .processDefinitionKey(FlowableConstants.HOLIDAY_PROCESS_KEY)
+                .processDefinitionKey(FlowableConstants.CAMPUS_REPORT_PROCESS_KEY)
                 .taskAssignee(id);
         long total = taskInstanceQuery.count();
         List<HistoricTaskInstance> taskInstances = taskInstanceQuery

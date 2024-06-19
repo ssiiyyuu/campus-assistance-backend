@@ -20,6 +20,7 @@ public class WebSocketUtils {
     }
 
     public static void removeWebSocketServer(WebSocketServer webSocketServer) {
+        //WevSocketServerMap remover by value
         Collection<WebSocketServer> values = webSocketServerMap.values();
         values.removeIf(item -> item.equals(webSocketServer));
         webSocketServerSet.remove(webSocketServer);

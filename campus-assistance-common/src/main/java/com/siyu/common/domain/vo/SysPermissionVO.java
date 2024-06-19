@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface SysPermissionVO {
@@ -20,26 +21,22 @@ public interface SysPermissionVO {
 	    @ApiModelProperty("名称")
 	    private String name;
 
-		@NotBlank
+		@NotNull
 	    @ApiModelProperty("类型(1:菜单,2:按钮)")
 	    private Integer type;
 
-		@NotBlank
 	    @ApiModelProperty("权限值")
 	    private String permissionValue;
 
-		@NotBlank
 	    @ApiModelProperty("访问路径")
 	    private String path;
 
-		@NotBlank
 	    @ApiModelProperty("组件路径")
 	    private String component;
 
-	    @ApiModelProperty("图标")
 	    private String icon;
 
-		@NotBlank
+		@NotNull
 	    @ApiModelProperty("状态(0:禁止,1:正常)")
 	    private Integer status;
     }

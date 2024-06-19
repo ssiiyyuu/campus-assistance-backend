@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Api(tags = "后台——权限模块")
+
 @RestController
 @RequestMapping("/admin/sysPermission")
 public class SysPermissionController {
@@ -52,6 +53,18 @@ public class SysPermissionController {
                 .collect(Collectors.toList());
         List<SysPermissionVO.Tree> tree = TreeUtils.buildTree(list, "0");
         return R.ok(tree);
+    }
+
+    @ApiOperation(value = "分页获取树形菜单")
+    @PostMapping("/tree")
+    public R<PaginationResult<SysPermissionVO.Tree>> treePage(@RequestBody PaginationQuery<?> query) {
+        List<SysPermissionVO.Tree> list = sysPermissionService.list().stream()
+                .map(item -> BeanUtils.copyProperties(item, new SysPermissionVO.Tree()))
+                .collect(Collectors.toList());
+        List<SysPermissionVO.Tree> tree = TreeUtils.buildTree(list, "0");
+
+        PaginationResult<SysPermissionVO.Tree> result = PaginationResult.of(query.getPageNum(), query.getPageSize(), tree);
+        return R.ok(result);
     }
 
     @ApiOperation(value = "递归删除菜单")

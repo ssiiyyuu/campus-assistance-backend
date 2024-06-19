@@ -1,7 +1,6 @@
 package com.siyu.shiro.mapper;
 
 import com.siyu.common.domain.dto.ShiroDepartment;
-import com.siyu.common.domain.dto.ShiroPermission;
 import com.siyu.common.domain.dto.ShiroRole;
 import com.siyu.common.domain.dto.ShiroUser;
 
@@ -13,7 +12,6 @@ public interface ShiroMapper {
 
     List<ShiroRole> selectRolesByUserId(String userId);
 
-    List<ShiroPermission> selectPermissionsByRoleIds(List<String> roleIds);
 
     ShiroDepartment selectDepartmentByDepartmentCode(String departmentCode);
 }

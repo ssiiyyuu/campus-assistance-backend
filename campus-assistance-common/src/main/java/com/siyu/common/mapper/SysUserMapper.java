@@ -19,4 +19,6 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     List<SysUser> selectByCodeAndRoleId(String departmentCode, String roleId);
 
     SysUserBaseDTO selectBaseUserById(String userId);
+
+    List<SysUser> selectByPrefixCodeAndRoleId(String departmentCode, String roleId);
 }

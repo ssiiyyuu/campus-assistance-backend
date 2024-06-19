@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Api(tags = "前台——信息模块")
+
 @RestController
 @RequestMapping("/frontside/information")
 public class InformationFrontsideController {

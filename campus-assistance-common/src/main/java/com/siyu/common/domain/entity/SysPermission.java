@@ -30,7 +30,7 @@ public class SysPermission extends BaseEntity {
     private String name;
 
     @ApiModelProperty("类型(1:菜单,2:按钮)")
-    private Byte type;
+    private Integer type;
 
     @ApiModelProperty("权限值")
     private String permissionValue;
@@ -45,5 +45,5 @@ public class SysPermission extends BaseEntity {
     private String icon;
 
     @ApiModelProperty("状态(0:禁止,1:正常)")
-    private Byte status;
+    private Integer status;
 }

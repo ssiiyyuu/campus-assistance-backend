@@ -42,8 +42,8 @@ mybatis-plus:
 qiniu:
   accessKey: ${QINIU_ACCESS_KEY}
   secretKey: ${QINIU_SECRET_KEY}
-  bucketName: siyu-bucket
-  url: http://img.siyu.site
+  bucketName: siyu-bucket2
+  url: http://sevzfr6k7.hn-bkt.clouddn.com
 
 jwt:
   refresh: 24

@@ -1,10 +1,8 @@
 package com.siyu.common.config;
 
-import com.siyu.common.utils.WebUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.RequestParameterBuilder;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
@@ -21,10 +19,6 @@ public class SwaggerConfig {
 
     @Bean
     public Docket webApiConfig() {
-        RequestParameter token_param = new RequestParameterBuilder()
-                .name(WebUtils.AUTHENTICATION_HEADER)
-                .in(ParameterType.HEADER)
-                .build();
         return new Docket(DocumentationType.OAS_30)
                 .groupName("webApi")
                 .apiInfo(webApiInfo())

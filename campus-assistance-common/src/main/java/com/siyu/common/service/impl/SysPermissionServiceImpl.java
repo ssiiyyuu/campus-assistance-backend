@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.siyu.common.domain.entity.SysPermission;
 import com.siyu.common.domain.entity.SysRolePermission;
-import com.siyu.common.utils.BeanUtils;
-import com.siyu.common.utils.TreeUtils;
 import com.siyu.common.domain.vo.SysPermissionVO;
 import com.siyu.common.mapper.SysPermissionMapper;
 import com.siyu.common.mapper.SysRolePermissionMapper;
 import com.siyu.common.service.SysPermissionService;
+import com.siyu.common.utils.BeanUtils;
+import com.siyu.common.utils.TreeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,13 +51,18 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     @Override
     public List<SysPermissionVO.Tree> getAssignPermissions(String roleId) {
         //所有权限
-        List<SysPermissionVO.Tree> all = sysPermissionMapper.selectList(null).stream()
-                .map(item -> BeanUtils.copyProperties(item, new SysPermissionVO.Tree())).collect(Collectors.toList());
+        List<SysPermission> all = sysPermissionMapper.selectList(null);
         //当前用户权限
         List<String> assignedIds = sysPermissionMapper.selectPermissionsByRoleId(roleId).stream()
                 .map(SysPermission::getId).collect(Collectors.toList());
+
+        List<SysPermissionVO.Tree> result = all.stream().map(item -> {
+            SysPermissionVO.Tree assigned = BeanUtils.copyProperties(item, new SysPermissionVO.Tree());
+            assigned.setAssigned(assignedIds.contains(item.getId()));
+            return assigned;
+        }).collect(Collectors.toList());
         //建树
-        List<SysPermissionVO.Tree> tree = TreeUtils.buildTree(all, "0");
+        List<SysPermissionVO.Tree> tree = TreeUtils.buildTree(result, "0");
         //标注是否分配
         tree.forEach(item -> item.setAssigned(assignedIds.contains(item.getId())));
         return tree;
